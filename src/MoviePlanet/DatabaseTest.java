@@ -1,4 +1,4 @@
-package Exercise6;
+package MoviePlanet;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package Exercise6;
+package MoviePlanet;
 
 import java.util.ArrayList;
 import java.util.List;

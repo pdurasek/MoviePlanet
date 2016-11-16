@@ -5,7 +5,7 @@ import java.util.Date;
 public class Actor
 {
 
-   private int actorID;
+   private int id;
    private String firstName;
    private String lastName;
    private Date dob;
@@ -15,14 +15,14 @@ public class Actor
    {
    }
 
-   public int getActorID()
+   public int getId()
    {
-      return actorID;
+      return id;
    }
 
-   public void setActorID(int actorID)
+   public void setId(int id)
    {
-      this.actorID = actorID;
+      this.id = id;
    }
 
    public String getFirstName()

@@ -1,14 +1,28 @@
 package MoviePlanet.DAO;
 
+import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+
 public class ScreeningTime
 {
    private int screeningTimeID;
    private int hour;
    private int minute;
    private int second;
+   private MySQLDatabase db;
 
-   public ScreeningTime()
+   public ScreeningTime(int screeningTimeID, MySQLDatabase db)
    {
+      this.screeningTimeID = screeningTimeID;
+      this.db = db;
+   }
+
+   public ScreeningTime(int screeningTimeID, int hour, int minute, int second, MySQLDatabase db)
+   {
+      this.screeningTimeID = screeningTimeID;
+      this.hour = hour;
+      this.minute = minute;
+      this.second = second;
+      this.db = db;
    }
 
    public int getScreeningTimeID()

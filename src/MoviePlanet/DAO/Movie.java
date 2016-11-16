@@ -1,5 +1,7 @@
 package MoviePlanet.DAO;
 
+import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+
 public class Movie
 {
    private int movieID;
@@ -10,9 +12,25 @@ public class Movie
    private String name;
    private String description;
    private double score;
+   private MySQLDatabase db;
 
-   public Movie()
+   public Movie(int movieID, MySQLDatabase db)
    {
+      this.movieID = movieID;
+      this.db = db;
+   }
+
+   public Movie(int movieID, int filmingTimeID, int screeningTimeID, int userID, int ratingID, String name, String description, double score, MySQLDatabase db)
+   {
+      this.movieID = movieID;
+      this.filmingTimeID = filmingTimeID;
+      this.screeningTimeID = screeningTimeID;
+      this.userID = userID;
+      this.ratingID = ratingID;
+      this.name = name;
+      this.description = description;
+      this.score = score;
+      this.db = db;
    }
 
    public int getFilmingTimeID()

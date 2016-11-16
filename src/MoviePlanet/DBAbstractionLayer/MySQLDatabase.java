@@ -45,9 +45,9 @@ public class MySQLDatabase
       }
    }
 
-   public List<String[]> getData(String statement, ArrayList<String> value, boolean included) throws DLException
+   public ArrayList<ArrayList<String>> getData(String statement, ArrayList<String> value) throws DLException
    {
-      return queryDB(prepare(statement, value), included);
+      return queryDB(prepare(statement, value));
    }
 
    public boolean setData(String statement, ArrayList<String> values) throws DLException
@@ -122,7 +122,7 @@ public class MySQLDatabase
       return new DLException(originalException, causeList, description, errorCode, stateCode);
    }
 
-   private List<String[]> queryDB(PreparedStatement statement, boolean included) throws DLException
+   private ArrayList<ArrayList<String>> queryDB(PreparedStatement statement) throws DLException
    {
       ResultSet rs = null;
 
@@ -131,7 +131,7 @@ public class MySQLDatabase
          statement.execute();
          rs = statement.getResultSet();
 
-         return getResultSet(rs, included);
+         return getResultSet(rs);
 
       }
       catch (SQLException e)
@@ -141,31 +141,29 @@ public class MySQLDatabase
       }
    }
 
-   public List<String[]> getResultSet(ResultSet rs, boolean included) throws DLException
+   public ArrayList<ArrayList<String>> getResultSet(ResultSet rs) throws DLException
    {
-      List<String[]> table = new ArrayList<>();
+      ArrayList<ArrayList<String>> table = new ArrayList<>();
 
       try
       {
          ResultSetMetaData metaData = rs.getMetaData();
          int numCols = metaData.getColumnCount();
-         if (included)
-         {
-            String[] columnHeaders = new String[numCols];
-            for (int col = 1; col <= numCols; col++)
-            {
-               columnHeaders[col - 1] = metaData.getColumnName(col);
-            }
-            table.add(columnHeaders);
-         }
 
          while (rs.next())
          {
-            String[] row = new String[numCols];
+            ArrayList<String> row = new ArrayList<>();
             for (int col = 1; col <= numCols; col++)
             {
                Object obj = rs.getObject(col);
-               row[col - 1] = (obj == null) ? null : obj.toString();
+               if(obj == null)
+               {
+                  row.add(null);
+               }
+               else
+               {
+                  row.add(obj.toString());
+               }
             }
             table.add(row);
          }

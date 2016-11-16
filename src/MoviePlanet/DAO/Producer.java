@@ -1,5 +1,7 @@
 package MoviePlanet.DAO;
 
+import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+
 import java.util.Date;
 
 public class Producer
@@ -9,9 +11,22 @@ public class Producer
    private String lastName;
    private Date dob;
    private String country;
+   private MySQLDatabase db;
 
-   public Producer()
+   public Producer(int producerID, MySQLDatabase db)
    {
+      this.producerID = producerID;
+      this.db = db;
+   }
+
+   public Producer(int producerID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   {
+      this.producerID = producerID;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.dob = dob;
+      this.country = country;
+      this.db = db;
    }
 
    public int getProducerID()

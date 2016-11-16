@@ -1,4 +1,4 @@
-package MoviePlanet;
+package MoviePlanet.DBAbstractionLayer;
 
 import java.io.IOException;
 import java.util.ArrayList;

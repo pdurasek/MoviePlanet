@@ -1,4 +1,4 @@
-package MoviePlanet;
+package MoviePlanet.DAO;
 
 public class User
 {

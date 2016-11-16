@@ -1,4 +1,4 @@
-package MoviePlanet;
+package MoviePlanet.DAO;
 
 import java.util.Date;
 
@@ -30,7 +30,7 @@ public class Director
       return firstName;
    }
 
-   public void setFirstName(String firstName)
+   public void setFirstName(String firbstName)
    {
       this.firstName = firstName;
    }

@@ -1,27 +1,28 @@
-package MoviePlanet;
+package MoviePlanet.DAO;
 
 import java.util.Date;
 
-public class Writer
+public class Actor
 {
-   private int writerID;
+
+   private int actorID;
    private String firstName;
    private String lastName;
    private Date dob;
    private String country;
 
-   public Writer()
+   public Actor()
    {
    }
 
-   public int getWriterID()
+   public int getActorID()
    {
-      return writerID;
+      return actorID;
    }
 
-   public void setWriterID(int writerID)
+   public void setActorID(int actorID)
    {
-      this.writerID = writerID;
+      this.actorID = actorID;
    }
 
    public String getFirstName()

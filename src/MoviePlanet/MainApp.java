@@ -1,5 +1,6 @@
 package MoviePlanet;
 
+import MoviePlanet.view.MovieOverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -51,6 +52,9 @@ public class MainApp extends Application
          AnchorPane movieOverview = (AnchorPane) loader.load();
 
          rootLayout.setCenter(movieOverview);
+
+         MovieOverviewController controller = loader.getController();
+         controller.setMainApp(this);
       }
       catch (IOException e)
       {

@@ -27,17 +27,21 @@ public class DatabaseTest
 
             MoviePlanet.DAO.Writer wr = null;
             Actor actor = null;
+            Genre genre = null;
             try
             {
                wr = new MoviePlanet.DAO.Writer(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
                actor = new Actor(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
+               genre = new Genre(1, "Dickerino", db);
             }
             catch (ParseException e)
             {
                e.printStackTrace();
             }
+
             wr.post();
             actor.post();
+            genre.post();
          }
          else
          {

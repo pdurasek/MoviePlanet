@@ -32,7 +32,6 @@ public class DatabaseTest
             {
                wr = new MoviePlanet.DAO.Writer(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
                actor = new Actor(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
-               genre = new Genre(1, "Dickerino", db);
             }
             catch (ParseException e)
             {
@@ -41,7 +40,6 @@ public class DatabaseTest
 
             wr.post();
             actor.post();
-            genre.post();
          }
          else
          {

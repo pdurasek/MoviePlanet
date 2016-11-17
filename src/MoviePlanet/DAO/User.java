@@ -1,6 +1,9 @@
 package MoviePlanet.DAO;
 
+import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+
+import java.util.ArrayList;
 
 public class User
 {
@@ -21,6 +24,118 @@ public class User
       this.username = username;
       this.password = password;
       this.db = db;
+   }
+
+   public void fetch()
+   {
+      String query = "SELECT userID, username, password FROM user WHERE userID = ?;";
+      ArrayList<ArrayList<String>> resultRow = null;
+      ArrayList<String> values = new ArrayList<>();
+      values.add(Integer.toString(this.userID));
+      int startPoint = 0;
+
+      try
+      {
+         resultRow = db.getData(query, values);
+         setValues(resultRow);
+      }
+      catch (DLException e)
+      {
+         //TODO handle exception
+         e.printStackTrace();
+      }
+   }
+
+   public void put()
+   {
+      String query = "UPDATE user SET username = ?, password = ? WHERE userID = ?;";
+      boolean dataFound = false;
+      ArrayList<String> values = new ArrayList<>();
+      values.add(this.username);
+      values.add(this.password);
+      values.add(Integer.toString(this.userID));
+
+      try
+      {
+         dataFound = db.setData(query, values);
+      }
+      catch (DLException e)
+      {
+         //TODO handle exception
+         e.printStackTrace();
+      }
+
+      if (dataFound)
+      {
+         //TODO implement
+      }
+      else
+      {
+         System.out.println("No rows found to update");
+      }
+   }
+
+   public void post()
+   {
+      String query = "INSERT INTO user (userID, username, password) VALUES (?, ?, ?);";
+      boolean success = false;
+      ArrayList<String> values = new ArrayList<>();
+      values.add(Integer.toString(this.userID));
+      values.add(this.username);
+      values.add(this.password);
+
+      try
+      {
+         success = db.setData(query, values);
+      }
+      catch (DLException e)
+      {
+         //TODO handle exception
+         e.printStackTrace();
+      }
+
+      if (success)
+      {
+         //TODO implement
+      }
+      else
+      {
+         System.out.println("No rows inserted");
+      }
+   }
+
+   public void delete()
+   {
+      String query = "DELETE from user WHERE userID = ?";
+      boolean success = false;
+      ArrayList<String> values = new ArrayList<>();
+      values.add(Integer.toString(this.userID));
+
+      try
+      {
+         success = db.setData(query, values);
+      }
+      catch (DLException e)
+      {
+         //TODO handle exception
+         e.printStackTrace();
+      }
+
+      if (success)
+      {
+         //TODO implement
+      }
+      else
+      {
+         System.out.println("No rows deleted");
+      }
+   }
+
+   public void setValues(ArrayList<ArrayList<String>> resultRow)
+   {
+      setUserID(Integer.parseInt(resultRow.get(0).get(0)));
+      setUsername(resultRow.get(0).get(1));
+      setPassword(resultRow.get(0).get(2));
    }
 
    public int getUserID()
@@ -51,5 +166,15 @@ public class User
    public void setPassword(String password)
    {
       this.password = password;
+   }
+
+   public MySQLDatabase getDb()
+   {
+      return db;
+   }
+
+   public void setDb(MySQLDatabase db)
+   {
+      this.db = db;
    }
 }

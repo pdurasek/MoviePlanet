@@ -36,11 +36,11 @@ public class Director
 
    public void fetch()
    {
+      String query = "SELECT directorID, firstName, lastName, dob, country" +
+              " from director where directorID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.directorID));
-      String query = "SELECT directorID, firstName, lastName, dob, country" +
-              " from director where directorID = ?;";
 
       try
       {
@@ -95,8 +95,8 @@ public class Director
       values.add(this.lastName);
       values.add(this.dob.toString());
       values.add(this.country);
-      String query = "INSERT INTO director (directorID, firstName, lastName, dob, country) " +
-              "VALUES (?, ?, ?, ?, ?)";
+      String query = "INSERT INTO director (firstName, lastName, dob, country) " +
+              "VALUES (?, ?, ?, ?)";
 
       try
       {

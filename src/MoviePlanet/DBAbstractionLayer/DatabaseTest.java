@@ -1,9 +1,12 @@
 package MoviePlanet.DBAbstractionLayer;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import MoviePlanet.DAO.*;
+
+import java.io.*;
+import java.io.Writer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 public class DatabaseTest
@@ -21,6 +24,22 @@ public class DatabaseTest
          if (db.connect())
          {
             System.out.println("Connected successfully!");
+
+            MoviePlanet.DAO.Writer wr = null;
+            Actor actor = null;
+            Genre genre = null;
+            try
+            {
+               wr = new MoviePlanet.DAO.Writer(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
+               actor = new Actor(1, "Harambe", "McDank", new java.sql.Date(new SimpleDateFormat("yyyy/MM/dd").parse("2001/09/11").getTime()), "Dankland", db);
+            }
+            catch (ParseException e)
+            {
+               e.printStackTrace();
+            }
+
+            wr.post();
+            actor.post();
          }
          else
          {

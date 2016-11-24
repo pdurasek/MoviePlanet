@@ -23,6 +23,15 @@ public class Producer
       this.db = db;
    }
 
+   public Producer(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   {
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.dob = dob;
+      this.country = country;
+      this.db = db;
+   }
+
    public Producer(int producerID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
    {
       this.producerID = producerID;

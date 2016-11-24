@@ -23,6 +23,15 @@ public class Writer
       this.db = db;
    }
 
+   public Writer(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   {
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.dob = dob;
+      this.country = country;
+      this.db = db;
+   }
+
    public Writer(int writerID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
    {
       this.writerID = writerID;

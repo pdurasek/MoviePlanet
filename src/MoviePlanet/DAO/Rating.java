@@ -17,6 +17,12 @@ public class Rating
       this.db = db;
    }
 
+   public Rating(String ratingType, MySQLDatabase db)
+   {
+      this.ratingType = ratingType;
+      this.db = db;
+   }
+
    public Rating(int ratingID, String ratingType, MySQLDatabase db)
    {
       this.ratingID = ratingID;

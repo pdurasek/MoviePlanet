@@ -17,6 +17,12 @@ public class Genre
       this.db = db;
    }
 
+   public Genre(String name, MySQLDatabase db)
+   {
+      this.name = name;
+      this.db = db;
+   }
+
    public Genre(int genreID, String name, MySQLDatabase db)
    {
       this.genreID = genreID;

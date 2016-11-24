@@ -18,6 +18,12 @@ public class Awards
       this.db = db;
    }
 
+   public Awards(String name, MySQLDatabase db)
+   {
+      this.name = name;
+      this.db = db;
+   }
+
    public Awards(int awardsID, String name, MySQLDatabase db)
    {
       this.awardsID = awardsID;

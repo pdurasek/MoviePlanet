@@ -10,6 +10,7 @@ public class User
    private int userID;
    private String username;
    private String password;
+   private String accessLevel;
    private MySQLDatabase db;
 
    public User(int userID, MySQLDatabase db)
@@ -18,11 +19,20 @@ public class User
       this.db = db;
    }
 
-   public User(int userID, String username, String password, MySQLDatabase db)
+   public User(String username, String password, String accessLevel, MySQLDatabase db)
+   {
+      this.username = username;
+      this.password = password;
+      this.accessLevel = accessLevel;
+      this.db = db;
+   }
+
+   public User(int userID, String username, String password, String accessLevel, MySQLDatabase db)
    {
       this.userID = userID;
       this.username = username;
       this.password = password;
+      this.accessLevel = accessLevel;
       this.db = db;
    }
 
@@ -166,6 +176,16 @@ public class User
    public void setPassword(String password)
    {
       this.password = password;
+   }
+
+   public String getAccessLevel()
+   {
+      return accessLevel;
+   }
+
+   public void setAccessLevel(String accessLevel)
+   {
+      this.accessLevel = accessLevel;
    }
 
    public MySQLDatabase getDb()

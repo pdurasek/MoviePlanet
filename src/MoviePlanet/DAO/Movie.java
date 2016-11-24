@@ -8,13 +8,12 @@ import java.util.ArrayList;
 public class Movie
 {
    private int movieID;
-   private int filmingTimeID;
-   private int screeningTimeID;
-   private int userID;
    private int ratingID;
    private String name;
    private String description;
    private double score;
+   private int year;
+   private int screenTime;
    private MySQLDatabase db;
 
    public Movie(int movieID, MySQLDatabase db)
@@ -23,16 +22,26 @@ public class Movie
       this.db = db;
    }
 
-   public Movie(int movieID, int filmingTimeID, int screeningTimeID, int userID, int ratingID, String name, String description, double score, MySQLDatabase db)
+   public Movie(int ratingID, String name, String description, double score, int year, int screenTime, MySQLDatabase db)
    {
-      this.movieID = movieID;
-      this.filmingTimeID = filmingTimeID;
-      this.screeningTimeID = screeningTimeID;
-      this.userID = userID;
       this.ratingID = ratingID;
       this.name = name;
       this.description = description;
       this.score = score;
+      this.year = year;
+      this.screenTime = screenTime;
+      this.db = db;
+   }
+
+   public Movie(int movieID, int ratingID, String name, String description, double score, int year, int screenTime, MySQLDatabase db)
+   {
+      this.movieID = movieID;
+      this.ratingID = ratingID;
+      this.name = name;
+      this.description = description;
+      this.score = score;
+      this.year = year;
+      this.screenTime = screenTime;
       this.db = db;
    }
 
@@ -151,36 +160,6 @@ public class Movie
       setScore(Double.parseDouble(resultRow.get(0).get(3)));
    }
 
-   public int getFilmingTimeID()
-   {
-      return filmingTimeID;
-   }
-
-   public void setFilmingTimeID(int filmingTimeID)
-   {
-      this.filmingTimeID = filmingTimeID;
-   }
-
-   public int getScreeningTimeID()
-   {
-      return screeningTimeID;
-   }
-
-   public void setScreeningTimeID(int screeningTimeID)
-   {
-      this.screeningTimeID = screeningTimeID;
-   }
-
-   public int getUserID()
-   {
-      return userID;
-   }
-
-   public void setUserID(int userID)
-   {
-      this.userID = userID;
-   }
-
    public int getRatingID()
    {
       return ratingID;
@@ -234,6 +213,26 @@ public class Movie
    public MySQLDatabase getDb()
    {
       return db;
+   }
+
+   public int getYear()
+   {
+      return year;
+   }
+
+   public void setYear(int year)
+   {
+      this.year = year;
+   }
+
+   public int getScreenTime()
+   {
+      return screenTime;
+   }
+
+   public void setScreenTime(int screenTime)
+   {
+      this.screenTime = screenTime;
    }
 
    public void setDb(MySQLDatabase db)

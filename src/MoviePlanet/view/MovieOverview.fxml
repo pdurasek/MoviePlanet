@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -17,19 +16,12 @@
    <children>
       <BorderPane fx:id="basePane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefWidth="120.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="filterVBox" prefWidth="120.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField prefHeight="6.0" prefWidth="27.0" promptText="Search...">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin></TextField>
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="102.0" text="Movie Title" textAlignment="CENTER" textFill="#bfbfbf" />
                </children>
                <BorderPane.margin>
                   <Insets top="20.0" />

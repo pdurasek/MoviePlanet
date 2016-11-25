@@ -136,7 +136,7 @@ public class Genre
    public void setValues(ArrayList<ArrayList<String>> resultRow)
    {
       setGenreID(Integer.parseInt(resultRow.get(0).get(0)));
-      setName(resultRow.get(1).get(1));
+      setName(resultRow.get(0).get(1));
    }
 
    public int getGenreID()

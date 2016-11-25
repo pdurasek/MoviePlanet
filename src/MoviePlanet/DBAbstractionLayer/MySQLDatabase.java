@@ -192,10 +192,17 @@ public class MySQLDatabase
       PreparedStatement preparedStatement = null;
       try
       {
-         preparedStatement = connection.prepareStatement(statement);
-         for (int i = 0; i < values.size(); i++)
+         if(values == null)
          {
-            preparedStatement.setString(i + 1, values.get(i));
+            preparedStatement = connection.prepareStatement(statement);
+         }
+         else
+         {
+            preparedStatement = connection.prepareStatement(statement);
+            for (int i = 0; i < values.size(); i++)
+            {
+               preparedStatement.setString(i + 1, values.get(i));
+            }
          }
 
          return preparedStatement;

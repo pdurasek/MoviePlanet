@@ -17,7 +17,7 @@ import javafx.scene.paint.Paint;
 
 import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MovieOverviewController
@@ -35,9 +35,9 @@ public class MovieOverviewController
 
    private MainApp mainApp;
    private MySQLDatabase db;
-   private HashMap<Integer, Genre> genres = new HashMap<>();
-   private HashMap<Integer, Movie> initialMovies = new HashMap<>();
-   private HashMap<Integer, Movie> filteredMovies = new HashMap<>();
+   private LinkedHashMap<Integer, Genre> genres = new LinkedHashMap<>();
+   private LinkedHashMap<Integer, Movie> initialMovies = new LinkedHashMap<>();
+   private LinkedHashMap<Integer, Movie> filteredMovies = new LinkedHashMap<>();
 
    public MovieOverviewController()
    {
@@ -79,7 +79,7 @@ public class MovieOverviewController
 
    }
 
-   private void generateMovieGrid(HashMap map)
+   private void generateMovieGrid(LinkedHashMap map)
    {
       //moviePane = new GridPane();
       moviePane.getChildren().clear();
@@ -119,7 +119,7 @@ public class MovieOverviewController
 
    }
 
-   private void setContent(int i, int j, int counter, HashMap<Integer, Movie> map)
+   private void setContent(int i, int j, int counter, LinkedHashMap<Integer, Movie> map)
    {
       Image img = new Image("media/" + map.get(map.keySet().toArray()[counter]).getImage());
       ImageView iv = new ImageView(img);
@@ -183,10 +183,8 @@ public class MovieOverviewController
          label.setPadding(new Insets(10, 0, 0, 0));
          label.setOnMouseClicked(event ->
          {
-            //label.setText("donger");
-            // TODO handle genre change
-            filteredMovies = new HashMap<Integer, Movie>();
-            label.setStyle("-fx-background-color: lightgray;");
+            filteredMovies = new LinkedHashMap<Integer, Movie>();
+            //label.setStyle("-fx-background-color: lightgray;");
             getSelectedGenre(label.getId());
             generateMovieGrid(filteredMovies);
          });
@@ -207,7 +205,7 @@ public class MovieOverviewController
       }
       catch (DLException e)
       {
-         System.out.println("Failed to fetch genres");
+         System.out.println("Failed to fetch movies");
       }
    }
 
@@ -242,7 +240,7 @@ public class MovieOverviewController
       }
    }
 
-   private void getMovies(ArrayList<ArrayList<String>> result, HashMap<Integer, Movie> map)
+   private void getMovies(ArrayList<ArrayList<String>> result, LinkedHashMap<Integer, Movie> map)
    {
       for (int i = 0; i < result.size(); ++i)
       {

@@ -32,6 +32,21 @@ public class MySQLDatabase
 
    }
 
+   /*
+   PreparedStatement pstmt =
+                conn.prepareStatement("select * from employee where id in (?)");
+Array array = conn.createArrayOf("VARCHAR", new Object[]{"1", "2","3"});
+pstmt.setArray(1, array);
+ResultSet rs = pstmt.executeQuery();
+
+ArrayList<String> list = new ArrayList<String>();
+PreparedStatement pstmt =
+            conn.prepareStatement("select * from employee where id in (?)");
+Array array = conn.createArrayOf("VARCHAR", list.toArray());
+pstmt.setArray(1, array);
+ResultSet rs = pstmt.executeQuery();
+    */
+
    public boolean close() throws DLException
    {
       try
@@ -48,6 +63,11 @@ public class MySQLDatabase
    public ArrayList<ArrayList<String>> getData(String statement, ArrayList<String> value) throws DLException
    {
       return queryDB(prepare(statement, value));
+   }
+
+   public ArrayList<ArrayList<String>> getDataCollection(String statement, ArrayList<String> values) throws DLException
+   {
+      return queryDB(prepareCollection(statement, values));
    }
 
    public boolean setData(String statement, ArrayList<String> values) throws DLException
@@ -156,7 +176,7 @@ public class MySQLDatabase
             for (int col = 1; col <= numCols; col++)
             {
                Object obj = rs.getObject(col);
-               if(obj == null)
+               if (obj == null)
                {
                   row.add(null);
                }
@@ -192,7 +212,7 @@ public class MySQLDatabase
       PreparedStatement preparedStatement = null;
       try
       {
-         if(values == null)
+         if (values == null)
          {
             preparedStatement = connection.prepareStatement(statement);
          }
@@ -204,6 +224,24 @@ public class MySQLDatabase
                preparedStatement.setString(i + 1, values.get(i));
             }
          }
+
+         return preparedStatement;
+      }
+      catch (SQLException e)
+      {
+         throw setExceptionData(e);
+      }
+   }
+
+   private PreparedStatement prepareCollection(String statement, ArrayList<String> values) throws DLException
+   {
+      PreparedStatement preparedStatement = null;
+      Array array = null;
+      try
+      {
+         preparedStatement = connection.prepareStatement(statement);
+         array = connection.createArrayOf("VARCHAR", values.toArray());
+         preparedStatement.setArray(1, array);
 
          return preparedStatement;
       }

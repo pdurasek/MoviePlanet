@@ -75,6 +75,7 @@ public class MainApp extends Application
 
          MovieOverviewController controller = loader.getController();
          controller.setDb(db);
+         controller.getMovieTitles();
          controller.getFilters();
          controller.getInitialMovies();
          controller.setMainApp(this);

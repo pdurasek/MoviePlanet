@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MoviePlanet.view.SelectedMovieOverviewController">
    <children>
@@ -38,7 +39,15 @@
                <children>
                   <Pane fx:id="videoPane" layoutX="529.0" layoutY="33.0" prefHeight="335.0" prefWidth="593.0" />
                   <Button fx:id="button" layoutX="1006.0" layoutY="635.0" mnemonicParsing="false" text="Button" />
-                  <Label layoutX="34.0" layoutY="58.0" text="Title:" />
+                  <Label layoutX="46.0" layoutY="46.0" text="Title:">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label layoutX="46.0" layoutY="100.0" text="Stars:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </center>

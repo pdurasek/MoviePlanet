@@ -1,5 +1,6 @@
 package MoviePlanet.view;
 
+import MoviePlanet.DAO.Movie;
 import MoviePlanet.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ public class SelectedMovieOverviewController
    private Pane videoPane;
 
    private MainApp mainApp;
+   private Movie movie;
 
    /**
     * Initializes the controller class. This method is automatically called
@@ -24,18 +26,26 @@ public class SelectedMovieOverviewController
    {
       button.setOnMouseClicked(event ->
       {
-         mainApp.setStage(true);
+         mainApp.setStage(true, null);
       });
       videoPane.setStyle("-fx-background-color: #181818");
-
-      WebView webView = new WebView();
-      webView.getEngine().load("https://www.youtube.com/embed/u3jVet3ZWPw");
-      webView.setPrefSize(640, 390);
-      videoPane.getChildren().add(webView);
    }
 
    public void setMainApp(MainApp mainApp)
    {
       this.mainApp = mainApp;
+   }
+
+   public void setMovie(Movie movie)
+   {
+      this.movie = movie;
+   }
+
+   public void setVideo()
+   {
+      WebView webView = new WebView();
+      webView.getEngine().load(movie.getTrailer());
+      webView.setPrefSize(640, 390);
+      videoPane.getChildren().add(webView);
    }
 }

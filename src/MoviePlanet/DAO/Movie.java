@@ -15,6 +15,7 @@ public class Movie
    private int year;
    private int screenTime;
    private String image;
+   private String trailer;
    private MySQLDatabase db;
 
    public Movie(int movieID, MySQLDatabase db)
@@ -23,7 +24,7 @@ public class Movie
       this.db = db;
    }
 
-   public Movie(int ratingID, String name, String description, double score, int year, int screenTime, String image, MySQLDatabase db)
+   public Movie(int ratingID, String name, String description, double score, int year, int screenTime, String image, String trailer, MySQLDatabase db)
    {
       this.ratingID = ratingID;
       this.name = name;
@@ -32,10 +33,11 @@ public class Movie
       this.year = year;
       this.screenTime = screenTime;
       this.image = image;
+      this.trailer = trailer;
       this.db = db;
    }
 
-   public Movie(int movieID, int ratingID, String name, String description, double score, int year, int screenTime, String image, MySQLDatabase db)
+   public Movie(int movieID, int ratingID, String name, String description, double score, int year, int screenTime, String image, String trailer, MySQLDatabase db)
    {
       this.movieID = movieID;
       this.ratingID = ratingID;
@@ -45,12 +47,13 @@ public class Movie
       this.year = year;
       this.screenTime = screenTime;
       this.image = image;
+      this.trailer = trailer;
       this.db = db;
    }
 
    public void fetch()
    {
-      String query = "SELECT movieID, ratingID, name, description, score, year, screenTime, image FROM movie WHERE movieID = ?;";
+      String query = "SELECT movieID, ratingID, name, description, score, year, screenTime, image, trailer FROM movie WHERE movieID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.movieID));
@@ -70,7 +73,7 @@ public class Movie
 
    public void put()
    {
-      String query = "UPDATE movie SET name = ?, description = ?, score = ?, year = ?, screenTime = ?, image = ? WHERE movieID = ?;";
+      String query = "UPDATE movie SET name = ?, description = ?, score = ?, year = ?, screenTime = ?, image = ?, trailer = ? WHERE movieID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(this.name);
@@ -80,6 +83,7 @@ public class Movie
       values.add(Integer.toString(this.year));
       values.add(Integer.toString(this.screenTime));
       values.add(this.image);
+      values.add(this.trailer);
 
       try
       {
@@ -103,7 +107,7 @@ public class Movie
 
    public void post()
    {
-      String query = "INSERT INTO movie (movieID, name, description, score, year, screenTime, image) VALUES (?, ?, ?, ?);";
+      String query = "INSERT INTO movie (movieID, name, description, score, year, screenTime, image, trailer) VALUES (?, ?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.movieID));
@@ -113,6 +117,7 @@ public class Movie
       values.add(Integer.toString(this.year));
       values.add(Integer.toString(this.screenTime));
       values.add(this.image);
+      values.add(this.trailer);
 
       try
       {
@@ -171,6 +176,8 @@ public class Movie
       setYear(Integer.parseInt(resultRow.get(0).get(5)));
       setScreenTime(Integer.parseInt(resultRow.get(0).get(6)));
       setImage(resultRow.get(0).get(7));
+      setTrailer(resultRow.get(0).get(8));
+
    }
 
    public int getRatingID()
@@ -256,6 +263,16 @@ public class Movie
    public void setImage(String image)
    {
       this.image = image;
+   }
+
+   public String getTrailer()
+   {
+      return trailer;
+   }
+
+   public void setTrailer(String trailer)
+   {
+      this.trailer = trailer;
    }
 
    public void setDb(MySQLDatabase db)

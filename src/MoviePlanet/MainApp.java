@@ -1,5 +1,6 @@
 package MoviePlanet;
 
+import MoviePlanet.DAO.Movie;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
 import MoviePlanet.view.MovieOverviewController;
@@ -106,7 +107,7 @@ public class MainApp extends Application
       launch(args);
    }
 
-   public void setStage(boolean version)
+   public void setStage(boolean version, Movie movie)
    {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(MainApp.class.getResource("view/SelectedMovieOverview.fxml"));
@@ -127,6 +128,8 @@ public class MainApp extends Application
 
          SelectedMovieOverviewController controller = loader.getController();
          controller.setMainApp(this);
+         controller.setMovie(movie);
+         controller.setVideo();
       }
       catch (IOException e)
       {

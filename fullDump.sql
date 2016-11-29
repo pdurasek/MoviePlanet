@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `movieplanet` /*!40100 DEFAULT CHARACTER SET utf8
 USE `movieplanet`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: movieplanet
+-- Host: localhost    Database: movieplanet
 -- ------------------------------------------------------
 -- Server version	5.7.12-log
 
@@ -152,6 +152,31 @@ INSERT INTO `director_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `filmingtime`
+--
+
+DROP TABLE IF EXISTS `filmingtime`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `filmingtime` (
+  `filmingTimeID` int(11) NOT NULL,
+  `year` int(11) DEFAULT NULL,
+  `month` int(11) DEFAULT NULL,
+  `day` int(11) DEFAULT NULL,
+  PRIMARY KEY (`filmingTimeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `filmingtime`
+--
+
+LOCK TABLES `filmingtime` WRITE;
+/*!40000 ALTER TABLE `filmingtime` DISABLE KEYS */;
+/*!40000 ALTER TABLE `filmingtime` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `genre`
 --
 
@@ -191,6 +216,7 @@ CREATE TABLE `movie` (
   `year` int(11) DEFAULT NULL,
   `screenTime` int(11) DEFAULT NULL,
   `image` varchar(150) DEFAULT NULL,
+  `trailer` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`movieID`),
   KEY `fk_Movie_Rating1_idx` (`ratingID`),
   CONSTRAINT `fk_Movie_Rating1` FOREIGN KEY (`ratingID`) REFERENCES `rating` (`ratingID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -203,7 +229,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2003,143,'pirates.jpg'),(2,3,'The Imitation Game','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.10,2014,114,'imitation.jpg'),(3,3,'Inception','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.80,2010,148,'inception.jpg'),(4,3,'The Hunger Games: Mockingjay - Part 2','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,137,'thg.jpg'),(5,3,'X-Men','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.40,2000,104,'xmen.jpg'),(6,3,'Suicide Squad','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.50,2016,123,'ss.jpg'),(7,3,'Lara Croft: Tomb Raider','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',5.70,2001,100,'lctr.jpg'),(8,3,'Avengers: The Age of Ultron','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.50,2015,141,'ultron.jpg'),(9,3,'Lord of the Rings: The Two Towers','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.70,2002,179,'lotr.jpg'),(10,4,'American Sniper','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.30,2014,133,'sniper.jpg'),(11,3,'Star Wars: The Force Awakens','Text Text Text Text Text Text Text Text Text Text Text ',8.20,2015,136,'sw.jpg'),(12,4,'The Revenant','Text Text Text Text Text Text Text Text Text Text Text ',8.00,2015,156,'rev.jpg'),(13,4,'Mad Max: The Fury Road','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2015,120,'max.jpg'),(14,3,'Warcraft: The Beginning','Text Text Text Text Text Text Text Text Text Text Text ',7.10,2016,123,'wow.jpg'),(15,4,'Entourage','Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,104,'entourage.jpg');
+INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2003,143,'pirates.jpg','https://www.youtube.com/embed/naQr0uTrH_s'),(2,3,'The Imitation Game','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.10,2014,114,'imitation.jpg','https://www.youtube.com/embed/nuPZUUED5uk'),(3,3,'Inception','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.80,2010,148,'inception.jpg','https://www.youtube.com/embed/YoHD9XEInc0'),(4,3,'The Hunger Games: Mockingjay - Part 2','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,137,'thg.jpg','https://www.youtube.com/embed/n-7K_OjsDCQ'),(5,3,'X-Men','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.40,2000,104,'xmen.jpg','https://www.youtube.com/embed/Iy5R5_T243w'),(6,3,'Suicide Squad','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.50,2016,123,'ss.jpg','https://www.youtube.com/embed/CmRih_VtVAs'),(7,3,'Lara Croft: Tomb Raider','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',5.70,2001,100,'lctr.jpg','https://www.youtube.com/embed/cnNBqNb3taw'),(8,3,'Avengers: The Age of Ultron','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.50,2015,141,'ultron.jpg','https://www.youtube.com/embed/tmeOjFno6Do'),(9,3,'Lord of the Rings: The Two Towers','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.70,2002,179,'lotr.jpg','https://www.youtube.com/embed/LbfMDwc4azU'),(10,4,'American Sniper','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.30,2014,133,'sniper.jpg','https://www.youtube.com/embed/99k3u9ay1gs'),(11,3,'Star Wars: The Force Awakens','Text Text Text Text Text Text Text Text Text Text Text ',8.20,2015,136,'sw.jpg','https://www.youtube.com/embed/sGbxmsDFVnE'),(12,4,'The Revenant','Text Text Text Text Text Text Text Text Text Text Text ',8.00,2015,156,'rev.jpg','https://www.youtube.com/embed/LoebZZ8K5N0'),(13,4,'Mad Max: The Fury Road','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2015,120,'max.jpg','https://www.youtube.com/embed/vjBb4SZ0F6Q'),(14,3,'Warcraft: The Beginning','Text Text Text Text Text Text Text Text Text Text Text ',7.10,2016,123,'wow.jpg','https://www.youtube.com/embed/u3jVet3ZWPw'),(15,4,'Entourage','Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,104,'entourage.jpg','https://www.youtube.com/embed/SGSE_XPF4_g');
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,6 +397,31 @@ INSERT INTO `rating` VALUES (1,'G'),(2,'PG'),(3,'PG-13'),(4,'R'),(5,'NC-17');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `screeningtime`
+--
+
+DROP TABLE IF EXISTS `screeningtime`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `screeningtime` (
+  `screeningTimeID` int(11) NOT NULL,
+  `hour` int(11) DEFAULT NULL,
+  `minute` int(11) DEFAULT NULL,
+  `second` int(11) DEFAULT NULL,
+  PRIMARY KEY (`screeningTimeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `screeningtime`
+--
+
+LOCK TABLES `screeningtime` WRITE;
+/*!40000 ALTER TABLE `screeningtime` DISABLE KEYS */;
+/*!40000 ALTER TABLE `screeningtime` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -460,4 +511,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-29 17:21:07
+-- Dump completed on 2016-11-29 19:02:22

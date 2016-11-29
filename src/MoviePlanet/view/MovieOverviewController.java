@@ -198,7 +198,7 @@ public class MovieOverviewController
       {
          getInitialMovies();
          disableFilters(true);
-         mainApp.setStage(false);
+         mainApp.setStage(false, filteredMovies.get(filteredMovies.keySet().toArray()[1]));
       });
       filterVBox.getChildren().add(clear);
       Separator separatorGenres = new Separator();

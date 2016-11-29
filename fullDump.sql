@@ -40,7 +40,7 @@ CREATE TABLE `actor` (
 
 LOCK TABLES `actor` WRITE;
 /*!40000 ALTER TABLE `actor` DISABLE KEYS */;
-INSERT INTO `actor` VALUES (1,'Johnny','Depp','1970-09-11','US'),(2,'Benedict','Cumberbatch','1976-07-17','UK'),(3,'Leonardo','DiCaprio','1974-11-11','US'),(4,'Jennifer','Lawrence','1990-08-15','US'),(5,'Karl','Urban','1972-06-07','New Zeland'),(6,'Angelina','Jolie','1975-06-04','US'),(7,'Scarlett','Johansson','1984-11-22','US'),(8,'Robbie','Margot','1990-07-02','Australia'),(9,'Bradley','Cooper','1975-01-05','US'),(10,'Sir Ian','McKellen','1939-05-25','UK');
+INSERT INTO `actor` VALUES (1,'Johnny','Depp','1970-09-11','US'),(2,'Benedict','Cumberbatch','1976-07-17','UK'),(3,'Leonardo','DiCaprio','1974-11-11','US'),(4,'Jennifer','Lawrence','1990-08-15','US'),(5,'Karl','Urban','1972-06-07','New Zeland'),(6,'Angelina','Jolie','1975-06-04','US'),(7,'Scarlett','Johansson','1984-11-22','US'),(8,'Robbie','Margot','1990-07-02','Australia'),(9,'Bradley','Cooper','1975-01-05','US'),(10,'Sir Ian','McKellen','1939-05-25','UK'),(11,'Daisy','Ridley','1985-11-05','US'),(12,'Tom','Hardy','1977-07-01','UK'),(13,'Travis','Fimmel','1985-05-11','Australia'),(14,'Jeremy','Piven','1965-11-05','US');
 /*!40000 ALTER TABLE `actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `actor_has_movie` (
 
 LOCK TABLES `actor_has_movie` WRITE;
 /*!40000 ALTER TABLE `actor_has_movie` DISABLE KEYS */;
-INSERT INTO `actor_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10);
+INSERT INTO `actor_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10),(11,11),(3,12),(12,12),(12,13),(13,14),(14,15);
 /*!40000 ALTER TABLE `actor_has_movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `director` (
 
 LOCK TABLES `director` WRITE;
 /*!40000 ALTER TABLE `director` DISABLE KEYS */;
-INSERT INTO `director` VALUES (1,'Gob','Verbinski','1970-01-01','US'),(2,'Morten','Tyldum','1972-02-02','Australia'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Francis','Lawrence','1976-04-04','US'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Simon','West','1980-06-06','UK'),(7,'Joss','Whedon','1982-07-07','Australia'),(8,'David','Ayer','1984-07-07','Australia'),(9,'Clint','Eastwood','1970-08-08','US'),(10,'Bryan','Singer','1972-09-09','US');
+INSERT INTO `director` VALUES (1,'Gob','Verbinski','1970-01-01','US'),(2,'Morten','Tyldum','1972-02-02','Australia'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Francis','Lawrence','1976-04-04','US'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Simon','West','1980-06-06','UK'),(7,'Joss','Whedon','1982-07-07','Australia'),(8,'David','Ayer','1984-07-07','Australia'),(9,'Clint','Eastwood','1970-08-08','US'),(10,'Bryan','Singer','1972-09-09','US'),(11,'J.J.','Abrams','1975-01-01','UK'),(12,'Alejandro G.','Inarritu','1972-08-21','Mexico'),(13,'George','Miller','1970-03-31','US'),(14,'Duncan','Jones','1979-02-14','US'),(15,'Doug','Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `director` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +147,7 @@ CREATE TABLE `director_has_movie` (
 
 LOCK TABLES `director_has_movie` WRITE;
 /*!40000 ALTER TABLE `director_has_movie` DISABLE KEYS */;
-INSERT INTO `director_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10);
+INSERT INTO `director_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10),(11,11),(12,12),(13,13),(14,14),(15,15);
 /*!40000 ALTER TABLE `director_has_movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +171,7 @@ CREATE TABLE `genre` (
 
 LOCK TABLES `genre` WRITE;
 /*!40000 ALTER TABLE `genre` DISABLE KEYS */;
-INSERT INTO `genre` VALUES (1,'Action'),(2,'Adventure'),(3,'Fantasy'),(4,'Biography'),(5,'Drama'),(6,'Thriller'),(7,'Sci-Fi');
+INSERT INTO `genre` VALUES (1,'Action'),(2,'Adventure'),(3,'Fantasy'),(4,'Biography'),(5,'Drama'),(6,'Thriller'),(7,'Sci-Fi'),(8,'Comedy');
 /*!40000 ALTER TABLE `genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,9 +187,10 @@ CREATE TABLE `movie` (
   `ratingID` int(11) NOT NULL,
   `name` varchar(200) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `score` varchar(45) DEFAULT NULL,
+  `score` decimal(10,2) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
   `screenTime` int(11) DEFAULT NULL,
+  `image` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`movieID`),
   KEY `fk_Movie_Rating1_idx` (`ratingID`),
   CONSTRAINT `fk_Movie_Rating1` FOREIGN KEY (`ratingID`) REFERENCES `rating` (`ratingID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -202,7 +203,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Text Text Text Text Text Text Text Text Text Text Text ','8.1',2003,143),(2,3,'The Imitation Game','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','8.1',2014,114),(3,3,'Inception','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','8.8',2010,148),(4,3,'The Hunger Games: Mockingjay - Part 2','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','6.6',2015,137),(5,3,'X-Men','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','7.4',2000,104),(6,3,'Suicide Squad','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','6.5',2016,123),(7,3,'Lara Croft: Tomb Raider','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','5.7',2001,100),(8,3,'Avengers: The Age of Ultron','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','7.5',2015,141),(9,3,'Lord of the Rings: The Two Towers','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','8.7',2002,179),(10,4,'American Sniper','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ','7.3',2014,133);
+INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2003,143,'pirates.jpg'),(2,3,'The Imitation Game','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.10,2014,114,'imitation.jpg'),(3,3,'Inception','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.80,2010,148,'inception.jpg'),(4,3,'The Hunger Games: Mockingjay - Part 2','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,137,'thg.jpg'),(5,3,'X-Men','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.40,2000,104,'xmen.jpg'),(6,3,'Suicide Squad','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.50,2016,123,'ss.jpg'),(7,3,'Lara Croft: Tomb Raider','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',5.70,2001,100,'lctr.jpg'),(8,3,'Avengers: The Age of Ultron','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.50,2015,141,'ultron.jpg'),(9,3,'Lord of the Rings: The Two Towers','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.70,2002,179,'lotr.jpg'),(10,4,'American Sniper','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.30,2014,133,'sniper.jpg'),(11,3,'Star Wars: The Force Awakens','Text Text Text Text Text Text Text Text Text Text Text ',8.20,2015,136,'sw.jpg'),(12,4,'The Revenant','Text Text Text Text Text Text Text Text Text Text Text ',8.00,2015,156,'rev.jpg'),(13,4,'Mad Max: The Fury Road','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2015,120,'max.jpg'),(14,3,'Warcraft: The Beginning','Text Text Text Text Text Text Text Text Text Text Text ',7.10,2016,123,'wow.jpg'),(15,4,'Entourage','Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,104,'entourage.jpg');
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +231,7 @@ CREATE TABLE `movie_has_awards` (
 
 LOCK TABLES `movie_has_awards` WRITE;
 /*!40000 ALTER TABLE `movie_has_awards` DISABLE KEYS */;
-INSERT INTO `movie_has_awards` VALUES (2,1),(3,1),(9,1),(10,1),(1,3),(3,3),(5,3),(8,3),(9,3),(1,4),(4,4),(6,4),(8,4),(1,5),(3,5),(9,5);
+INSERT INTO `movie_has_awards` VALUES (2,1),(3,1),(9,1),(10,1),(12,1),(13,1),(12,2),(1,3),(3,3),(5,3),(8,3),(9,3),(11,3),(13,3),(1,4),(4,4),(6,4),(8,4),(11,4),(12,4),(1,5),(3,5),(9,5),(11,5),(12,5),(13,5);
 /*!40000 ALTER TABLE `movie_has_awards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +259,7 @@ CREATE TABLE `movie_has_genre` (
 
 LOCK TABLES `movie_has_genre` WRITE;
 /*!40000 ALTER TABLE `movie_has_genre` DISABLE KEYS */;
-INSERT INTO `movie_has_genre` VALUES (1,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(10,1),(1,2),(3,2),(4,2),(5,2),(6,2),(7,2),(8,2),(9,2),(1,3),(6,3),(7,3),(9,3),(2,4),(10,4),(2,5),(9,5),(10,5),(2,6),(3,7),(4,7),(5,7),(8,7);
+INSERT INTO `movie_has_genre` VALUES (1,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(10,1),(11,1),(13,1),(14,1),(1,2),(3,2),(4,2),(5,2),(6,2),(7,2),(8,2),(9,2),(11,2),(12,2),(13,2),(14,2),(1,3),(6,3),(7,3),(9,3),(11,3),(14,3),(2,4),(10,4),(2,5),(9,5),(10,5),(12,5),(2,6),(12,6),(3,7),(4,7),(5,7),(8,7),(13,7),(15,8);
 /*!40000 ALTER TABLE `movie_has_genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,6 +287,7 @@ CREATE TABLE `movie_has_producer` (
 
 LOCK TABLES `movie_has_producer` WRITE;
 /*!40000 ALTER TABLE `movie_has_producer` DISABLE KEYS */;
+INSERT INTO `movie_has_producer` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10),(11,11),(12,12),(13,13),(14,14),(15,15);
 /*!40000 ALTER TABLE `movie_has_producer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +315,7 @@ CREATE TABLE `movie_has_writer` (
 
 LOCK TABLES `movie_has_writer` WRITE;
 /*!40000 ALTER TABLE `movie_has_writer` DISABLE KEYS */;
-INSERT INTO `movie_has_writer` VALUES (1,1),(2,2),(3,3),(4,4),(9,5),(7,6),(8,7),(6,8),(10,9),(5,10);
+INSERT INTO `movie_has_writer` VALUES (1,1),(2,2),(3,3),(4,4),(9,5),(7,6),(8,7),(6,8),(10,9),(5,10),(11,11),(12,12),(13,13),(14,14),(15,15);
 /*!40000 ALTER TABLE `movie_has_writer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,7 +342,7 @@ CREATE TABLE `producer` (
 
 LOCK TABLES `producer` WRITE;
 /*!40000 ALTER TABLE `producer` DISABLE KEYS */;
-INSERT INTO `producer` VALUES (1,'Jerry','Bruckheimer','1976-11-09','US'),(2,'Nora','Grossman','1978-10-10','UK'),(3,'Christopher','Nolan','1974-03-03','US'),(4,'Jon','Kilik','1978-02-18','UK'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Lawrence','Gordon','1972-07-12','US'),(7,'Kevin','Feige','1975-09-30','UK'),(8,'Zack','Snyder','1974-03-26','Australia'),(9,'Clint','Eastwood','1975-04-20','US'),(10,'Ralph','Winter','1980-01-08','US');
+INSERT INTO `producer` VALUES (1,'Jerry','Bruckheimer','1976-11-09','US'),(2,'Nora','Grossman','1978-10-10','UK'),(3,'Christopher','Nolan','1974-03-03','US'),(4,'Jon','Kilik','1978-02-18','UK'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Lawrence','Gordon','1972-07-12','US'),(7,'Kevin','Feige','1975-09-30','UK'),(8,'Zack','Snyder','1974-03-26','Australia'),(9,'Clint','Eastwood','1975-04-20','US'),(10,'Ralph','Winter','1980-01-08','US'),(11,'J.J.','Abrams','1975-01-01','US'),(12,'Steve','Golin','1960-09-11','US'),(13,'George','Miller','1970-03-31','US'),(14,'Stuart','Fenegan','1973-10-17','UK'),(15,'Doug','Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `producer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,7 +447,7 @@ CREATE TABLE `writer` (
 
 LOCK TABLES `writer` WRITE;
 /*!40000 ALTER TABLE `writer` DISABLE KEYS */;
-INSERT INTO `writer` VALUES (1,'Ted','Elliott','1970-01-01','US'),(2,'Graham','Moore','1972-02-02','US'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Peter','Craig','1976-04-04','UK'),(5,'J.R.R.','Tolkien','1892-01-03','South Africa'),(6,'Sara B.','Cooper','1978-05-05','Australia'),(7,'Stan','Lee','1980-06-06','US'),(8,'David','Ayer','1982-07-07','Australia'),(9,'Chris','Kyle','1980-08-08','US'),(10,'Tom','DeSanto','1982-09-09','UK');
+INSERT INTO `writer` VALUES (1,'Ted','Elliott','1970-01-01','US'),(2,'Graham','Moore','1972-02-02','US'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Peter','Craig','1976-04-04','UK'),(5,'J.R.R.','Tolkien','1892-01-03','South Africa'),(6,'Sara B.','Cooper','1978-05-05','Australia'),(7,'Stan','Lee','1980-06-06','US'),(8,'David','Ayer','1982-07-07','Australia'),(9,'Chris','Kyle','1980-08-08','US'),(10,'Tom','DeSanto','1982-09-09','UK'),(11,'Lawrence','Kasdan','1980-07-07','US'),(12,'Mark L.','Smith','1968-11-14','US'),(13,'George','Miller','1970-03-31','US'),(14,'Charles','Leavitt','1985-11-06','UK'),(15,'Doug','Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `writer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -458,4 +460,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-24 12:14:55
+-- Dump completed on 2016-11-29 17:21:07

@@ -3,9 +3,11 @@ package MoviePlanet;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
 import MoviePlanet.view.MovieOverviewController;
+import MoviePlanet.view.SelectedMovieOverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -19,6 +21,7 @@ import java.util.Properties;
 public class MainApp extends Application
 {
    private Stage primaryStage;
+   private Scene mainScreen;
    private BorderPane rootLayout;
    private MySQLDatabase db;
 
@@ -27,6 +30,7 @@ public class MainApp extends Application
    {
       this.primaryStage = primaryStage;
       this.primaryStage.setTitle("MoviePlanet");
+      this.primaryStage.getIcons().add(new Image("media/icon.png"));
 
       db = setConnectionData("dbinfo");
 
@@ -53,9 +57,15 @@ public class MainApp extends Application
          loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
          rootLayout = (BorderPane) loader.load();
 
-         Scene scene = new Scene(rootLayout);
-         primaryStage.setScene(scene);
+         mainScreen = new Scene(rootLayout);
+         primaryStage.setScene(mainScreen);
          primaryStage.show();
+
+         /*WebView webView = new WebView();
+         webView.getEngine().load("https://www.youtube.com/embed/u3jVet3ZWPw");
+         webView.setPrefSize(640, 390);
+         primaryStage.setScene(new Scene(webView));
+         primaryStage.show();*/
       }
       catch (IOException e)
       {
@@ -94,6 +104,34 @@ public class MainApp extends Application
    public static void main(String[] args)
    {
       launch(args);
+   }
+
+   public void setStage(boolean version)
+   {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(MainApp.class.getResource("view/SelectedMovieOverview.fxml"));
+      try
+      {
+         AnchorPane page = (AnchorPane) loader.load();
+         Stage testStage = new Stage();
+         testStage.setTitle("Test");
+         Scene scene = new Scene(page);
+         if (version)
+         {
+            primaryStage.setScene(mainScreen);
+         }
+         else
+         {
+            primaryStage.setScene(scene);
+         }
+
+         SelectedMovieOverviewController controller = loader.getController();
+         controller.setMainApp(this);
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
    }
 
    private MySQLDatabase setConnectionData(String filename)

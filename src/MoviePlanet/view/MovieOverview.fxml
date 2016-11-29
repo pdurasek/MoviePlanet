@@ -18,7 +18,7 @@
          <left>
             <VBox fx:id="filterVBox" prefWidth="120.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField prefHeight="6.0" prefWidth="27.0" promptText="Search...">
+                  <TextField fx:id="searchBar" prefHeight="6.0" prefWidth="27.0" promptText="Search...">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin></TextField>

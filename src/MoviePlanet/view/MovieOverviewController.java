@@ -10,12 +10,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,12 +36,20 @@ public class MovieOverviewController
    private GridPane moviePane;
    @FXML
    private VBox filterVBox;
+   @FXML
+   private TextField searchBar;
 
    private MainApp mainApp;
    private MySQLDatabase db;
    private LinkedHashMap<Integer, Genre> genres = new LinkedHashMap<>();
    private LinkedHashMap<Integer, Movie> initialMovies = new LinkedHashMap<>();
    private LinkedHashMap<Integer, Movie> filteredMovies = new LinkedHashMap<>();
+   private LinkedHashMap<Integer, Movie> searchedMovies = new LinkedHashMap<>();
+   private LinkedHashMap<String, String> secondaryFilters = new LinkedHashMap<>();
+   private ArrayList<String> movieList = new ArrayList<>();
+   private StringBuilder builder = new StringBuilder();
+   private String selectedSecondary = "score";
+   private String order = "asc";
 
    public MovieOverviewController()
    {
@@ -46,7 +58,16 @@ public class MovieOverviewController
    @FXML
    private void initialize()
    {
+      secondaryFilters.put("Rating", "score");
+      secondaryFilters.put("A-Z", "name");
+      secondaryFilters.put("Release Date", "year");
+      secondaryFilters.put("Duration", "screenTime");
 
+      searchBar.setOnKeyReleased(event ->
+      {
+         search();
+      });
+      searchBar.setDisable(true);
    }
 
    public void setMainApp(MainApp mainApp)
@@ -72,6 +93,10 @@ public class MovieOverviewController
       //movieScrollPane.setStyle("-fx-focus-color: #181818 ; -fx-faint-focus-color: #181818 ;");
 
       generateMovieGrid(initialMovies);
+      /*WebView webView = new WebView();
+      webView.getEngine().load("https://www.youtube.com/embed/u3jVet3ZWPw");
+      webView.setPrefSize(640, 390);
+      moviePane.getChildren().add(webView);*/
    }
 
    private void getSelectedMovies()
@@ -140,9 +165,8 @@ public class MovieOverviewController
       moviePoster.getChildren().add(titleLabel);
       moviePane.add(moviePoster, j, i);
       moviePane.setAlignment(Pos.TOP_CENTER);
-      moviePane.setVgap(50);
+      moviePane.setVgap(55);
       moviePane.setHgap(15);
-
    }
 
    public void getFilters()
@@ -171,8 +195,15 @@ public class MovieOverviewController
       clear.setTextFill(Paint.valueOf("#bfbfbf"));
       clear.setPadding(new Insets(10, 0, 0, 0));
       clear.setOnMouseClicked(event ->
-              getInitialMovies());
+      {
+         getInitialMovies();
+         disableFilters(true);
+         mainApp.setStage(false);
+      });
       filterVBox.getChildren().add(clear);
+      Separator separatorGenres = new Separator();
+      separatorGenres.setPadding(new Insets(5, 5, 0, 10));
+      filterVBox.getChildren().add(separatorGenres);
 
       for (Map.Entry<Integer, Genre> entry : genres.entrySet())
       {
@@ -187,7 +218,43 @@ public class MovieOverviewController
             //label.setStyle("-fx-background-color: lightgray;");
             getSelectedGenre(label.getId());
             generateMovieGrid(filteredMovies);
+            disableFilters(false);
          });
+         filterVBox.getChildren().add(label);
+      }
+
+      Separator separatorSecondary = new Separator();
+      separatorSecondary.setPadding(new Insets(5, 5, 0, 10));
+      filterVBox.getChildren().add(separatorSecondary);
+
+      for (Map.Entry<String, String> entry : secondaryFilters.entrySet())
+      {
+         Label label = new Label(entry.getKey());
+         label.setTextFill(Paint.valueOf("#bfbfbf"));
+         label.setPadding(new Insets(10, 0, 0, 0));
+         label.setDisable(true);
+         label.setOnMouseClicked(event ->
+         {
+            if (selectedSecondary.equals(entry.getValue()))
+            {
+               if (order.equals("asc"))
+               {
+                  order = "desc";
+               }
+               else
+               {
+                  order = "asc";
+               }
+            }
+            else
+            {
+               order = "asc";
+            }
+            selectedSecondary = entry.getValue();
+            fetchFilteredMovies();
+            generateMovieGrid(filteredMovies);
+         });
+
          filterVBox.getChildren().add(label);
       }
 
@@ -196,7 +263,7 @@ public class MovieOverviewController
 
    public void getMovieTitles()
    {
-      String sql = "SELECT movieID FROM movie ORDER BY score DESC LIMIT 10;";
+      String sql = "SELECT movieID FROM movie ORDER BY score DESC LIMIT 20;";
       try
       {
          ArrayList<ArrayList<String>> result = db.getData(sql, null);
@@ -217,8 +284,8 @@ public class MovieOverviewController
          ArrayList<String> values = new ArrayList<>();
          values.add(genre);
          ArrayList<ArrayList<String>> result = db.getData(sql, values);
-         ArrayList<String> movieList = new ArrayList<>();
-         StringBuilder builder = new StringBuilder();
+         movieList = new ArrayList<>();
+         builder = new StringBuilder();
          for (int i = 0; i < result.size(); ++i)
          {
             ArrayList<String> row = result.get(i);
@@ -227,11 +294,8 @@ public class MovieOverviewController
             int movieID = Integer.parseInt(row.get(0));
             movieList.add(Integer.toString(movieID));
          }
-
-         sql = "SELECT movieID FROM movie WHERE movieID in (" + builder.deleteCharAt(builder.length() - 1).toString() + " );"; //ORDER BY and LIMIT?
-         result = db.getData(sql, movieList);
-         getMovies(result, filteredMovies);
-
+         builder.deleteCharAt(builder.length() - 1);
+         fetchFilteredMovies();
       }
       catch (DLException e)
       {
@@ -240,8 +304,26 @@ public class MovieOverviewController
       }
    }
 
+   private void fetchFilteredMovies()
+   {
+      String sql = "SELECT movieID FROM movie WHERE movieID in (" + builder.toString() + " ) " +
+              "ORDER BY " + selectedSecondary + " " + order + ";"; //ORDER BY and LIMIT?
+      ArrayList<ArrayList<String>> result = null;
+      try
+      {
+         result = db.getData(sql, movieList);
+      }
+      catch (DLException e)
+      {
+         e.printStackTrace();
+      }
+      getMovies(result, filteredMovies);
+   }
+
    private void getMovies(ArrayList<ArrayList<String>> result, LinkedHashMap<Integer, Movie> map)
    {
+      //map = new LinkedHashMap<>();
+      map.clear();
       for (int i = 0; i < result.size(); ++i)
       {
          ArrayList<String> row = result.get(i);
@@ -251,5 +333,34 @@ public class MovieOverviewController
          movie.fetch();
          map.put(movie.getMovieID(), movie);
       }
+   }
+
+   private void disableFilters(boolean isFiltered)
+   {
+      int size = filterVBox.getChildren().size();
+      searchBar.setDisable(isFiltered);
+
+      for (int i = size - 4; i < size; i++)
+      {
+         filterVBox.getChildren().get(i).setDisable(isFiltered);
+      }
+   }
+
+   private void search()
+   {
+      searchedMovies.clear();
+      String searchTerm = searchBar.getText();
+
+      for (Map.Entry<Integer, Movie> entry : filteredMovies.entrySet())
+      {
+         String name = entry.getValue().getName();
+
+         if (name.toLowerCase().contains(searchTerm.toLowerCase()))
+         {
+            searchedMovies.put(entry.getKey(), entry.getValue());
+         }
+      }
+
+      generateMovieGrid(searchedMovies);
    }
 }

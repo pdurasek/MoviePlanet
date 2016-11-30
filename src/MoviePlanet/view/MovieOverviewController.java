@@ -23,6 +23,7 @@ import javafx.scene.paint.Paint;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class MovieOverviewController
 {
@@ -146,8 +147,55 @@ public class MovieOverviewController
 
    private void setContent(int i, int j, int counter, LinkedHashMap<Integer, Movie> map)
    {
-      Image img = new Image("media/" + map.get(map.keySet().toArray()[counter]).getImage());
+      Movie currentMovie = map.get(map.keySet().toArray()[counter]);
+      Image img = new Image("media/" + currentMovie.getImage());
       ImageView iv = new ImageView(img);
+
+      iv.setOnMouseClicked(event ->
+      {
+         /*try
+         {
+            StringBuilder genreBuilder = new StringBuilder();
+            String sql = "SELECT Genre_genreID from movie_has_genre where Movie_movieID = ?";
+            ArrayList<String> values = new ArrayList<>();
+            values.add(Integer.toString(currentMovie.getMovieID()));
+            ArrayList<ArrayList<String>> selectedGenres = db.getData(sql, values);
+
+            values.clear();
+
+            for (int x = 0; x < selectedGenres.size(); ++x)
+            {
+               ArrayList<String> row = selectedGenres.get(x);
+               genreBuilder.append("?,");
+
+               values.add(row.get(0));
+            }
+            genreBuilder .deleteCharAt(genreBuilder.length() - 1);
+            sql = "SELECT name from genre where genreID IN (" + genreBuilder.toString() +")";
+            selectedGenres.clear();
+            selectedGenres = db.getData(sql, values);
+
+            mainApp.setStage(false, currentMovie);
+         }
+         catch (DLException e)
+         {
+            e.printStackTrace();
+         }*/
+         String movieID = Integer.toString(currentMovie.getMovieID());
+
+         ArrayList<String> genres = fetchDetails(movieID, "Genre_genreID", "movie_has_genre",
+                 "genre", "genreID");
+         ArrayList<String> actor = fetchDetails(movieID, "Actor_actorID", "actor_has_movie",
+                 "actor", "actorID");
+         ArrayList<String> writers = fetchDetails(movieID, "Writer_writerID", "movie_has_writer",
+                 "writer", "writerID");
+         ArrayList<String> directors = fetchDetails(movieID, "Director_directorID", "director_has_movie",
+                 "director",  "directorID");
+         ArrayList<String> producers = fetchDetails(movieID, "Producer_producerID", "movie_has_producer",
+                 "producer", "producerID");
+
+         mainApp.setStage(false, currentMovie, genres, actor, writers, directors, producers);
+      });
       Label titleLabel = new Label(map.get(map.keySet().toArray()[counter]).getName());
       generateView(iv, titleLabel, i, j);
    }
@@ -198,7 +246,6 @@ public class MovieOverviewController
       {
          getInitialMovies();
          disableFilters(true);
-         mainApp.setStage(false, filteredMovies.get(filteredMovies.keySet().toArray()[1]));
       });
       filterVBox.getChildren().add(clear);
       Separator separatorGenres = new Separator();
@@ -362,5 +409,46 @@ public class MovieOverviewController
       }
 
       generateMovieGrid(searchedMovies);
+   }
+
+   private ArrayList<String> fetchDetails(String id, String selectTarget, String selectDestination, String targetDestination,
+                                          String targetCondition)
+   {
+      ArrayList<String> values = new ArrayList<>();
+
+      try
+      {
+         StringBuilder genreBuilder = new StringBuilder();
+         String sql = "SELECT " + selectTarget + " from " + selectDestination + " where Movie_movieID = ?";
+         values.add(id);
+         ArrayList<ArrayList<String>> selectedGenres = db.getData(sql, values);
+
+         values.clear();
+
+         for (int x = 0; x < selectedGenres.size(); ++x)
+         {
+            ArrayList<String> row = selectedGenres.get(x);
+            genreBuilder.append("?,");
+
+            values.add(row.get(0));
+         }
+         genreBuilder.deleteCharAt(genreBuilder.length() - 1);
+         sql = "SELECT name from " + targetDestination + " where " + targetCondition + " IN (" + genreBuilder.toString() + ")";
+         selectedGenres.clear();
+         selectedGenres = db.getData(sql, values);
+         values.clear();
+
+         for (int x = 0; x < selectedGenres.size(); x++)
+         {
+            values.add(selectedGenres.get(x).get(0));
+         }
+
+      }
+      catch (DLException e)
+      {
+         e.printStackTrace();
+      }
+
+      return values;
    }
 }

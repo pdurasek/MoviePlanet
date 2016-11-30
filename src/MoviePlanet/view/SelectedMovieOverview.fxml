@@ -34,53 +34,102 @@
                </menus>
             </MenuBar>
          </top>
-         <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <left>
+            <Pane prefHeight="200.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
                <children>
                   <Pane fx:id="videoPane" layoutX="529.0" layoutY="33.0" prefHeight="335.0" prefWidth="495.0" />
-                  <Button fx:id="button" layoutX="1006.0" layoutY="635.0" mnemonicParsing="false" text="Button" />
-                  <Label layoutX="46.0" layoutY="46.0" text="Title:" textFill="#bfbfbf">
+                  <Label disable="true" layoutX="46.0" layoutY="46.0" text="Title:" textFill="#bfbfbf" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label layoutX="46.0" layoutY="100.0" text="Stars:" textFill="#bfbfbf">
+                  <Label disable="true" layoutX="46.0" layoutY="91.0" text="Director:" textFill="#bfbfbf" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="46.0" layoutY="150.0" text="Screen time:" textFill="#bfbfbf">
+                  <Label disable="true" layoutX="46.0" layoutY="252.0" text="Screen time:" textFill="#bfbfbf" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="46.0" layoutY="201.0" text="Year:" textFill="#bfbfbf">
+                  <Label disable="true" layoutX="46.0" layoutY="303.0" text="Year:" textFill="#bfbfbf" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel" layoutX="173.0" layoutY="53.0" prefHeight="20.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                  <Label fx:id="nameLabel" layoutX="173.0" layoutY="28.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="screenTimeLabel" layoutX="173.0" layoutY="157.0" prefHeight="20.0" prefWidth="182.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                  <Label fx:id="directorLabel" layoutX="173.0" layoutY="73.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="yearLabel" layoutX="173.0" layoutY="208.0" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                  <Label fx:id="screenTimeLabel" layoutX="173.0" layoutY="234.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="castLabel" layoutX="173.0" layoutY="107.0" prefHeight="20.0" prefWidth="198.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                  <Label fx:id="yearLabel" layoutX="173.0" layoutY="285.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Label disable="true" layoutX="46.0" layoutY="354.0" text="Genres:" textFill="#bfbfbf" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="genreLabel" layoutX="173.0" layoutY="336.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label disable="true" layoutX="529.0" layoutY="476.0" text="Description:" textFill="#bfbfbf" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="descriptionArea" alignment="TOP_LEFT" layoutX="529.0" layoutY="528.0" prefHeight="138.0" prefWidth="637.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label disable="true" layoutX="46.0" layoutY="147.0" text="Producer:" textFill="#bfbfbf" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="producerLabel" layoutX="173.0" layoutY="129.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label disable="true" layoutX="46.0" layoutY="200.0" text="Writer:" textFill="#bfbfbf" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="writerLabel" layoutX="173.0" layoutY="182.0" prefHeight="63.0" prefWidth="231.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="button" layoutX="1078.0" layoutY="700.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Back" />
+                  <Label disable="true" layoutX="46.0" layoutY="528.0" text="Cast:" textFill="#bfbfbf" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="castLabel" alignment="TOP_LEFT" layoutX="46.0" layoutY="574.0" prefHeight="138.0" prefWidth="371.0" text="Label" textFill="#bfbfbf" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                </children>
             </Pane>
-         </center>
+         </left>
       </BorderPane>
    </children>
 </AnchorPane>

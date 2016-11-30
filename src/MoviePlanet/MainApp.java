@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class MainApp extends Application
@@ -107,7 +108,8 @@ public class MainApp extends Application
       launch(args);
    }
 
-   public void setStage(boolean version, Movie movie)
+   public void setStage(boolean version, Movie movie, ArrayList<String> genres, ArrayList<String> cast, ArrayList<String> writer,
+                        ArrayList<String> director, ArrayList<String> producer)
    {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(MainApp.class.getResource("view/SelectedMovieOverview.fxml"));
@@ -124,12 +126,11 @@ public class MainApp extends Application
          else
          {
             primaryStage.setScene(scene);
+            SelectedMovieOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setDetails(movie, genres, cast, writer, director, producer);
          }
 
-         SelectedMovieOverviewController controller = loader.getController();
-         controller.setMainApp(this);
-         controller.setMovie(movie);
-         controller.setVideo();
       }
       catch (IOException e)
       {

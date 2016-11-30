@@ -153,34 +153,6 @@ public class MovieOverviewController
 
       iv.setOnMouseClicked(event ->
       {
-         /*try
-         {
-            StringBuilder genreBuilder = new StringBuilder();
-            String sql = "SELECT Genre_genreID from movie_has_genre where Movie_movieID = ?";
-            ArrayList<String> values = new ArrayList<>();
-            values.add(Integer.toString(currentMovie.getMovieID()));
-            ArrayList<ArrayList<String>> selectedGenres = db.getData(sql, values);
-
-            values.clear();
-
-            for (int x = 0; x < selectedGenres.size(); ++x)
-            {
-               ArrayList<String> row = selectedGenres.get(x);
-               genreBuilder.append("?,");
-
-               values.add(row.get(0));
-            }
-            genreBuilder .deleteCharAt(genreBuilder.length() - 1);
-            sql = "SELECT name from genre where genreID IN (" + genreBuilder.toString() +")";
-            selectedGenres.clear();
-            selectedGenres = db.getData(sql, values);
-
-            mainApp.setStage(false, currentMovie);
-         }
-         catch (DLException e)
-         {
-            e.printStackTrace();
-         }*/
          String movieID = Integer.toString(currentMovie.getMovieID());
 
          ArrayList<String> genres = fetchDetails(movieID, "Genre_genreID", "movie_has_genre",

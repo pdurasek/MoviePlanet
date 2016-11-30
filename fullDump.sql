@@ -26,8 +26,7 @@ DROP TABLE IF EXISTS `actor`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `actor` (
   `actorID` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`actorID`)
@@ -40,7 +39,7 @@ CREATE TABLE `actor` (
 
 LOCK TABLES `actor` WRITE;
 /*!40000 ALTER TABLE `actor` DISABLE KEYS */;
-INSERT INTO `actor` VALUES (1,'Johnny','Depp','1970-09-11','US'),(2,'Benedict','Cumberbatch','1976-07-17','UK'),(3,'Leonardo','DiCaprio','1974-11-11','US'),(4,'Jennifer','Lawrence','1990-08-15','US'),(5,'Karl','Urban','1972-06-07','New Zeland'),(6,'Angelina','Jolie','1975-06-04','US'),(7,'Scarlett','Johansson','1984-11-22','US'),(8,'Robbie','Margot','1990-07-02','Australia'),(9,'Bradley','Cooper','1975-01-05','US'),(10,'Sir Ian','McKellen','1939-05-25','UK'),(11,'Daisy','Ridley','1985-11-05','US'),(12,'Tom','Hardy','1977-07-01','UK'),(13,'Travis','Fimmel','1985-05-11','Australia'),(14,'Jeremy','Piven','1965-11-05','US');
+INSERT INTO `actor` VALUES (1,'Johnny Depp','1970-09-11','US'),(2,'Benedict Cumberbatch','1976-07-17','UK'),(3,'Leonardo DiCaprio','1974-11-11','US'),(4,'Jennifer Lawrence','1990-08-15','US'),(5,'Karl Urban','1972-06-07','New Zeland'),(6,'Angelina Jolie','1975-06-04','US'),(7,'Scarlett Johansson','1984-11-22','US'),(8,'Robbie Margot','1990-07-02','Australia'),(9,'Bradley Cooper','1975-01-05','US'),(10,'Sir Ian McKellen','1939-05-25','UK'),(11,'Daisy Ridley','1985-11-05','US'),(12,'Tom Hardy','1977-07-01','UK'),(13,'Travis Fimmel','1985-05-11','Australia'),(14,'Jeremy Piven','1965-11-05','US');
 /*!40000 ALTER TABLE `actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,8 +104,7 @@ DROP TABLE IF EXISTS `director`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `director` (
   `directorID` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`directorID`)
@@ -119,7 +117,7 @@ CREATE TABLE `director` (
 
 LOCK TABLES `director` WRITE;
 /*!40000 ALTER TABLE `director` DISABLE KEYS */;
-INSERT INTO `director` VALUES (1,'Gob','Verbinski','1970-01-01','US'),(2,'Morten','Tyldum','1972-02-02','Australia'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Francis','Lawrence','1976-04-04','US'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Simon','West','1980-06-06','UK'),(7,'Joss','Whedon','1982-07-07','Australia'),(8,'David','Ayer','1984-07-07','Australia'),(9,'Clint','Eastwood','1970-08-08','US'),(10,'Bryan','Singer','1972-09-09','US'),(11,'J.J.','Abrams','1975-01-01','UK'),(12,'Alejandro G.','Inarritu','1972-08-21','Mexico'),(13,'George','Miller','1970-03-31','US'),(14,'Duncan','Jones','1979-02-14','US'),(15,'Doug','Ellin','1980-04-25','US');
+INSERT INTO `director` VALUES (1,'Gob Verbinski','1970-01-01','US'),(2,'Morten Tyldum','1972-02-02','Australia'),(3,'Christopher Nolan','1974-03-03','UK'),(4,'Francis Lawrence','1976-04-04','US'),(5,'Peter Jackson','1978-05-05','New Zeland'),(6,'Simon West','1980-06-06','UK'),(7,'Joss Whedon','1982-07-07','Australia'),(8,'David Ayer','1984-07-07','Australia'),(9,'Clint Eastwood','1970-08-08','US'),(10,'Bryan Singer','1972-09-09','US'),(11,'J.J. Abrams','1975-01-01','UK'),(12,'Alejandro G. Inarritu','1972-08-21','Mexico'),(13,'George Miller','1970-03-31','US'),(14,'Duncan Jones','1979-02-14','US'),(15,'Doug Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `director` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,31 +147,6 @@ LOCK TABLES `director_has_movie` WRITE;
 /*!40000 ALTER TABLE `director_has_movie` DISABLE KEYS */;
 INSERT INTO `director_has_movie` VALUES (1,1),(2,2),(3,3),(4,4),(10,5),(8,6),(6,7),(7,8),(5,9),(9,10),(11,11),(12,12),(13,13),(14,14),(15,15);
 /*!40000 ALTER TABLE `director_has_movie` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `filmingtime`
---
-
-DROP TABLE IF EXISTS `filmingtime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `filmingtime` (
-  `filmingTimeID` int(11) NOT NULL,
-  `year` int(11) DEFAULT NULL,
-  `month` int(11) DEFAULT NULL,
-  `day` int(11) DEFAULT NULL,
-  PRIMARY KEY (`filmingTimeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `filmingtime`
---
-
-LOCK TABLES `filmingtime` WRITE;
-/*!40000 ALTER TABLE `filmingtime` DISABLE KEYS */;
-/*!40000 ALTER TABLE `filmingtime` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -229,7 +202,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2003,143,'pirates.jpg','https://www.youtube.com/embed/naQr0uTrH_s'),(2,3,'The Imitation Game','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.10,2014,114,'imitation.jpg','https://www.youtube.com/embed/nuPZUUED5uk'),(3,3,'Inception','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.80,2010,148,'inception.jpg','https://www.youtube.com/embed/YoHD9XEInc0'),(4,3,'The Hunger Games: Mockingjay - Part 2','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,137,'thg.jpg','https://www.youtube.com/embed/n-7K_OjsDCQ'),(5,3,'X-Men','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.40,2000,104,'xmen.jpg','https://www.youtube.com/embed/Iy5R5_T243w'),(6,3,'Suicide Squad','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',6.50,2016,123,'ss.jpg','https://www.youtube.com/embed/CmRih_VtVAs'),(7,3,'Lara Croft: Tomb Raider','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',5.70,2001,100,'lctr.jpg','https://www.youtube.com/embed/cnNBqNb3taw'),(8,3,'Avengers: The Age of Ultron','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.50,2015,141,'ultron.jpg','https://www.youtube.com/embed/tmeOjFno6Do'),(9,3,'Lord of the Rings: The Two Towers','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',8.70,2002,179,'lotr.jpg','https://www.youtube.com/embed/LbfMDwc4azU'),(10,4,'American Sniper','Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text ',7.30,2014,133,'sniper.jpg','https://www.youtube.com/embed/99k3u9ay1gs'),(11,3,'Star Wars: The Force Awakens','Text Text Text Text Text Text Text Text Text Text Text ',8.20,2015,136,'sw.jpg','https://www.youtube.com/embed/sGbxmsDFVnE'),(12,4,'The Revenant','Text Text Text Text Text Text Text Text Text Text Text ',8.00,2015,156,'rev.jpg','https://www.youtube.com/embed/LoebZZ8K5N0'),(13,4,'Mad Max: The Fury Road','Text Text Text Text Text Text Text Text Text Text Text ',8.10,2015,120,'max.jpg','https://www.youtube.com/embed/vjBb4SZ0F6Q'),(14,3,'Warcraft: The Beginning','Text Text Text Text Text Text Text Text Text Text Text ',7.10,2016,123,'wow.jpg','https://www.youtube.com/embed/u3jVet3ZWPw'),(15,4,'Entourage','Text Text Text Text Text Text Text Text Text Text Text ',6.60,2015,104,'entourage.jpg','https://www.youtube.com/embed/SGSE_XPF4_g');
+INSERT INTO `movie` VALUES (1,3,'Pirates of the Caribbean: The Curse of the Black Pearl','Capt. Jack Sparrow (Johnny Depp) arrives at Port Royal in the Caribbean without a ship or crew. His timing is inopportune, however, because later that evening the town is besieged by a pirate ship. The pirates kidnap the governor\'s daughter, Elizabeth (Keira Knightley), who\'s in possession of a valuable coin that is linked to a curse that has transformed the pirates into the undead. A gallant blacksmith (Orlando Bloom) in love with Elizabeth allies with Sparrow in pursuit of the pirates.',8.10,2003,143,'pirates.jpg','https://www.youtube.com/embed/naQr0uTrH_s'),(2,3,'The Imitation Game','In 1939, newly created British intelligence agency MI6 recruits Cambridge mathematics alumnus Alan Turing (Benedict Cumberbatch) to crack Nazi codes, including Enigma -- which cryptanalysts had thought unbreakable. Turing\'s team, including Joan Clarke (Keira Knightley), analyze Enigma messages while he builds a machine to decipher them. Turing and team finally succeed and become heroes, but in 1952, the quiet genius encounters disgrace when authorities reveal he is gay and send him to prison.',8.10,2014,114,'imitation.jpg','https://www.youtube.com/embed/nuPZUUED5uk'),(3,3,'Inception','Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people\'s dreams and steal their secrets from their subconscious. His skill has made him a hot commodity in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: Plant an idea in someone\'s mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb\'s every move.',8.80,2010,148,'inception.jpg','https://www.youtube.com/embed/YoHD9XEInc0'),(4,3,'The Hunger Games: Mockingjay - Part 2','Realizing the stakes are no longer just for survival, Katniss Everdeen (Jennifer Lawrence) teams up with her closest friends, including Peeta (Josh Hutcherson), Gale (Liam Hemsworth) and Finnick for the ultimate mission. Together, they leave District 13 to liberate the citizens of war-torn Panem and assassinate President Snow, who\'s obsessed with destroying Katniss. What lies ahead are mortal traps, dangerous enemies and moral choices that will ultimately determine the future of millions.',6.60,2015,137,'thg.jpg','https://www.youtube.com/embed/n-7K_OjsDCQ'),(5,3,'X-Men','They are children of the atom, homo superior, the next link in the chain of evolution. Each was born with a unique genetic mutation, which at puberty manifested itself in extraordinary powers. In a world filled with hate and prejudice, they are feared by those who cannot accept their differences. Led by Xavier the X-Men fight to protect a world that fears them. They are locked in a battle with former colleague and friend, Magneto who believes humans and mutants should never co-exist.',7.40,2000,104,'xmen.jpg','https://www.youtube.com/embed/Iy5R5_T243w'),(6,3,'Suicide Squad','Figuring they\'re all expendable, a U.S. intelligence officer decides to assemble a team of dangerous, incarcerated supervillains for a top-secret mission. Now armed with government weapons, Deadshot (Will Smith), Harley Quinn (Margot Robbie), Captain Boomerang, Killer Croc and other despicable inmates must learn to work together. Dubbed Task Force X, the criminals unite to battle a mysterious and powerful entity, while the diabolical Joker (Jared Leto) launches an evil agenda of his own.',6.50,2016,123,'ss.jpg','https://www.youtube.com/embed/CmRih_VtVAs'),(7,3,'Lara Croft: Tomb Raider','This live action feature is inspired by the most successful interactive video-game character in history -- Lara Croft. Beautiful and brainy, Lara (Angelina Jolie) is the heroine of Eidos Interactive\'s phenomenally successful \"Tomb Raider\" game series. It is one woman\'s fearless quest criss-crossing the globe, in an amazing attempt to save the world.',5.70,2001,100,'lctr.jpg','https://www.youtube.com/embed/cnNBqNb3taw'),(8,3,'Avengers: The Age of Ultron','When Tony Stark (Robert Downey Jr.) jump-starts a dormant peacekeeping program, things go terribly awry, forcing him, Thor (Chris Hemsworth), the Incredible Hulk (Mark Ruffalo) and the rest of the Avengers to reassemble. As the fate of Earth hangs in the balance, the team is put to the ultimate test as they battle Ultron, a technological terror hell-bent on human extinction. Along the way, they encounter two mysterious and powerful newcomers, Pietro and Wanda Maximoff.',7.50,2015,141,'ultron.jpg','https://www.youtube.com/embed/tmeOjFno6Do'),(9,3,'Lord of the Rings: The Two Towers','The sequel to the Golden Globe-nominated and AFI Award-winning \"The Lord of the Rings: The Fellowship of the Ring,\" \"The Two Towers\" follows the continuing quest of Frodo (Elijah Wood) and the Fellowship to destroy the One Ring. Frodo and Sam (Sean Astin) discover they are being followed by the mysterious Gollum. Aragorn (Viggo Mortensen), the Elf archer Legolas and Gimli the Dwarf encounter the besieged Rohan kingdom, whose once great King Theoden has fallen under Saruman\'s deadly spell.',8.70,2002,179,'lotr.jpg','https://www.youtube.com/embed/LbfMDwc4azU'),(10,4,'American Sniper','U.S. Navy SEAL Chris Kyle (Bradley Cooper) takes his sole mission -- protect his comrades -- to heart and becomes one of the most lethal snipers in American history. His pinpoint accuracy not only saves countless lives but also makes him a prime target of insurgents. Despite grave danger and his struggle to be a good husband and father to his family back in the States, Kyle serves four tours of duty in Iraq. However, when he finally returns home, he finds that he cannot leave the war behind.',7.30,2014,133,'sniper.jpg','https://www.youtube.com/embed/99k3u9ay1gs'),(11,3,'Star Wars: The Force Awakens','30 years after the defeat of Darth Vader and the Empire, Rey, a scavenger from the planet Jakku, finds a BB-8 droid that knows the whereabouts of the long lost Luke Skywalker. Rey, as well as a rogue stormtrooper and two smugglers, are thrown into the middle of a battle between the Resistance and the daunting legions of the First Order.',8.20,2015,136,'sw.jpg','https://www.youtube.com/embed/sGbxmsDFVnE'),(12,4,'The Revenant','While exploring the uncharted wilderness in 1823, frontiersman Hugh Glass (Leonardo DiCaprio) sustains life-threatening injuries from a brutal bear attack. When a member (Tom Hardy) of his hunting team kills his young son (Forrest Goodluck) and leaves him for dead, Glass must utilize his survival skills to find a way back to civilization. Grief-stricken and fueled by vengeance, the legendary fur trapper treks through the snowy terrain to track down the man who betrayed him.',8.00,2015,156,'rev.jpg','https://www.youtube.com/embed/LoebZZ8K5N0'),(13,4,'Mad Max: The Fury Road','Years after the collapse of civilization, the tyrannical Immortan Joe enslaves apocalypse survivors inside the desert fortress the Citadel. When the warrior Imperator Furiosa (Charlize Theron) leads the despot\'s five wives in a daring escape, she forges an alliance with Max Rockatansky (Tom Hardy), a loner and former captive. Fortified in the massive, armored truck the War Rig, they try to outrun the ruthless warlord and his henchmen in a deadly high-speed chase through the Wasteland.',8.10,2015,120,'max.jpg','https://www.youtube.com/embed/vjBb4SZ0F6Q'),(14,3,'Warcraft: The Beginning','Looking to escape from his dying world, the orc shaman Gul\'dan utilizes dark magic to open a portal to the human realm of Azeroth. Supported by the fierce fighter Blackhand, Gul\'dan organizes the orc clans into a conquering army called the Horde. Uniting to protect Azeroth from these hulking invaders are King Llane, the mighty warrior Anduin Lothar (Travis Fimmel) and the powerful wizard Medivh. As the two races collide, leaders from each side start to question if war is the only answer.',7.10,2016,123,'wow.jpg','https://www.youtube.com/embed/u3jVet3ZWPw'),(15,4,'Entourage','While hanging with pals Eric (Kevin Connolly), Turtle (Jerry Ferrara) and Johnny Drama (Kevin Dillon), movie star Vince Chase (Adrian Grenier) gets a phone call from Ari Gold (Jeremy Piven), his former agent, who now runs a major studio. Ari offers Vince the leading role in his first production, but the actor insists on also directing the film. Things get out of hand when the $100 million flick goes over budget, leaving Ari, Vince and the boys at the mercy of the cutthroat world of Hollywood.',6.60,2015,104,'entourage.jpg','https://www.youtube.com/embed/SGSE_XPF4_g');
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,8 +327,7 @@ DROP TABLE IF EXISTS `producer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `producer` (
   `producerID` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`producerID`)
@@ -368,7 +340,7 @@ CREATE TABLE `producer` (
 
 LOCK TABLES `producer` WRITE;
 /*!40000 ALTER TABLE `producer` DISABLE KEYS */;
-INSERT INTO `producer` VALUES (1,'Jerry','Bruckheimer','1976-11-09','US'),(2,'Nora','Grossman','1978-10-10','UK'),(3,'Christopher','Nolan','1974-03-03','US'),(4,'Jon','Kilik','1978-02-18','UK'),(5,'Peter','Jackson','1978-05-05','New Zeland'),(6,'Lawrence','Gordon','1972-07-12','US'),(7,'Kevin','Feige','1975-09-30','UK'),(8,'Zack','Snyder','1974-03-26','Australia'),(9,'Clint','Eastwood','1975-04-20','US'),(10,'Ralph','Winter','1980-01-08','US'),(11,'J.J.','Abrams','1975-01-01','US'),(12,'Steve','Golin','1960-09-11','US'),(13,'George','Miller','1970-03-31','US'),(14,'Stuart','Fenegan','1973-10-17','UK'),(15,'Doug','Ellin','1980-04-25','US');
+INSERT INTO `producer` VALUES (1,'Jerry Bruckheimer','1976-11-09','US'),(2,'Nora Grossman','1978-10-10','UK'),(3,'Christopher Nolan','1974-03-03','US'),(4,'Jon Kilik','1978-02-18','UK'),(5,'Peter Jackson','1978-05-05','New Zeland'),(6,'Lawrence Gordon','1972-07-12','US'),(7,'Kevin Feige','1975-09-30','UK'),(8,'Zack Snyder','1974-03-26','Australia'),(9,'Clint Eastwood','1975-04-20','US'),(10,'Ralph Winter','1980-01-08','US'),(11,'J.J. Abrams','1975-01-01','US'),(12,'Steve Golin','1960-09-11','US'),(13,'George Miller','1970-03-31','US'),(14,'Stuart Fenegan','1973-10-17','UK'),(15,'Doug Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `producer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,7 +405,8 @@ CREATE TABLE `user` (
   `username` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `accessLevel` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`userID`)
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -484,8 +457,7 @@ DROP TABLE IF EXISTS `writer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `writer` (
   `writerID` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`writerID`)
@@ -498,7 +470,7 @@ CREATE TABLE `writer` (
 
 LOCK TABLES `writer` WRITE;
 /*!40000 ALTER TABLE `writer` DISABLE KEYS */;
-INSERT INTO `writer` VALUES (1,'Ted','Elliott','1970-01-01','US'),(2,'Graham','Moore','1972-02-02','US'),(3,'Christopher','Nolan','1974-03-03','UK'),(4,'Peter','Craig','1976-04-04','UK'),(5,'J.R.R.','Tolkien','1892-01-03','South Africa'),(6,'Sara B.','Cooper','1978-05-05','Australia'),(7,'Stan','Lee','1980-06-06','US'),(8,'David','Ayer','1982-07-07','Australia'),(9,'Chris','Kyle','1980-08-08','US'),(10,'Tom','DeSanto','1982-09-09','UK'),(11,'Lawrence','Kasdan','1980-07-07','US'),(12,'Mark L.','Smith','1968-11-14','US'),(13,'George','Miller','1970-03-31','US'),(14,'Charles','Leavitt','1985-11-06','UK'),(15,'Doug','Ellin','1980-04-25','US');
+INSERT INTO `writer` VALUES (1,'Ted Elliott','1970-01-01','US'),(2,'Graham Moore','1972-02-02','US'),(3,'Christopher Nolan','1974-03-03','UK'),(4,'Peter Craig','1976-04-04','UK'),(5,'J.R.R. Tolkien','1892-01-03','South Africa'),(6,'Sara B. Cooper','1978-05-05','Australia'),(7,'Stan Lee','1980-06-06','US'),(8,'David Ayer','1982-07-07','Australia'),(9,'Chris Kyle','1980-08-08','US'),(10,'Tom DeSanto','1982-09-09','UK'),(11,'Lawrence Kasdan','1980-07-07','US'),(12,'Mark L. Smith','1968-11-14','US'),(13,'George Miller','1970-03-31','US'),(14,'Charles Leavitt','1985-11-06','UK'),(15,'Doug Ellin','1980-04-25','US');
 /*!40000 ALTER TABLE `writer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -511,4 +483,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-29 19:02:22
+-- Dump completed on 2016-11-30 16:24:45

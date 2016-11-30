@@ -3,6 +3,7 @@ package MoviePlanet;
 import MoviePlanet.DAO.Movie;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+import MoviePlanet.view.LoginOverviewController;
 import MoviePlanet.view.MovieOverviewController;
 import MoviePlanet.view.SelectedMovieOverviewController;
 import javafx.application.Application;
@@ -41,7 +42,7 @@ public class MainApp extends Application
          if (db.connect())
          {
             initRootLayout();
-            showMovieOverview();
+            showLoginOverview();
          }
       }
       catch (DLException e)
@@ -62,12 +63,6 @@ public class MainApp extends Application
          mainScreen = new Scene(rootLayout);
          primaryStage.setScene(mainScreen);
          primaryStage.show();
-
-         /*WebView webView = new WebView();
-         webView.getEngine().load("https://www.youtube.com/embed/u3jVet3ZWPw");
-         webView.setPrefSize(640, 390);
-         primaryStage.setScene(new Scene(webView));
-         primaryStage.show();*/
       }
       catch (IOException e)
       {
@@ -79,6 +74,11 @@ public class MainApp extends Application
    {
       try
       {
+         rootLayout.setMinSize(1200, 800);
+         primaryStage.setMinWidth(1200);
+         primaryStage.setMinHeight(800);
+         primaryStage.setX(352.0);
+         primaryStage.setY(67.0);
          FXMLLoader loader = new FXMLLoader();
          loader.setLocation(MainApp.class.getResource("view/MovieOverview.fxml"));
          AnchorPane movieOverview = (AnchorPane) loader.load();
@@ -90,6 +90,26 @@ public class MainApp extends Application
          controller.getMovieTitles();
          controller.getFilters();
          controller.getInitialMovies();
+         controller.setMainApp(this);
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public void showLoginOverview()
+   {
+      try
+      {
+         FXMLLoader loader = new FXMLLoader();
+         loader.setLocation(MainApp.class.getResource("view/LoginOverview.fxml"));
+         AnchorPane loginOverview = (AnchorPane) loader.load();
+
+         rootLayout.setCenter(loginOverview);
+
+         LoginOverviewController controller = loader.getController();
+         controller.setDb(db);
          controller.setMainApp(this);
       }
       catch (IOException e)

@@ -8,10 +8,7 @@ import MoviePlanet.MainApp;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,7 +20,6 @@ import javafx.scene.paint.Paint;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class MovieOverviewController
 {
@@ -39,6 +35,8 @@ public class MovieOverviewController
    private VBox filterVBox;
    @FXML
    private TextField searchBar;
+   @FXML
+   private MenuItem listEdit;
 
    private MainApp mainApp;
    private MySQLDatabase db;
@@ -59,7 +57,7 @@ public class MovieOverviewController
    @FXML
    private void initialize()
    {
-      secondaryFilters.put("Rating", "score");
+      secondaryFilters.put("Score", "score");
       secondaryFilters.put("A-Z", "name");
       secondaryFilters.put("Release Date", "year");
       secondaryFilters.put("Duration", "screenTime");
@@ -69,6 +67,8 @@ public class MovieOverviewController
          search();
       });
       searchBar.setDisable(true);
+
+      listEdit.setOnAction(event -> mainApp.showListOverview());
    }
 
    public void setMainApp(MainApp mainApp)

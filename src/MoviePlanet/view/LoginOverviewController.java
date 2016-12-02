@@ -1,14 +1,18 @@
 package MoviePlanet.view;
 
+import MoviePlanet.DAO.User;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
 import MoviePlanet.MainApp;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class LoginOverviewController
@@ -27,6 +31,13 @@ public class LoginOverviewController
    private void initialize()
    {
       loginButton.setOnMouseClicked(event -> login());
+      loginButton.setOnKeyPressed(event ->
+      {
+         if(event.getCode().equals(KeyCode.ENTER))
+         {
+            login();
+         }
+      });
    }
 
    public void setMainApp(MainApp mainApp)
@@ -41,7 +52,7 @@ public class LoginOverviewController
 
    private void login()
    {
-      String sql = "SELECT password FROM user WHERE username = ?";
+      String sql = "SELECT password, userID FROM user WHERE username = ?";
       ArrayList<String> values = new ArrayList<String>();
       values.add(username.getText());
 
@@ -52,20 +63,22 @@ public class LoginOverviewController
 
          if (password.getText().equals(passwordStr))
          {
+            User user = new User(Integer.parseInt(result.get(0).get(1)), db);
+            mainApp.setUser(user);
             mainApp.showMovieOverview();
          }
          else
          {
-          incorretLogin();
+            incorrectLogin();
          }
       }
       catch (DLException | IndexOutOfBoundsException e)
       {
-         incorretLogin();
+         incorrectLogin();
       }
    }
 
-   private void incorretLogin()
+   private void incorrectLogin()
    {
       Alert alert = new Alert(Alert.AlertType.WARNING);
       alert.initOwner(mainApp.getPrimaryStage());

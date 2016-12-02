@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MoviePlanet.view.ListOverviewController">
+   <children>
+      <BorderPane layoutX="-1.0" layoutY="-1.0" prefHeight="880.0" prefWidth="616.0" style="-fx-background-color: #181818;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-40.0">
+         <bottom>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <buttons>
+                  <Button fx:id="backButton" mnemonicParsing="false" text="Back" />
+              </buttons>
+               <BorderPane.margin>
+                  <Insets right="30.0" />
+               </BorderPane.margin>
+            </ButtonBar>
+         </bottom>
+         <center>
+            <ScrollPane fx:id="scrollPane" prefHeight="760.0" prefWidth="595.0" style="-fx-background-color: #181818; -fx-region-background: #181818;" BorderPane.alignment="CENTER">
+               <content>
+                  <GridPane fx:id="moviePane" prefHeight="758.0" prefWidth="600.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="419.0" />
+                    </columnConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

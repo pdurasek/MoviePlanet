@@ -1,8 +1,10 @@
 package MoviePlanet;
 
 import MoviePlanet.DAO.Movie;
+import MoviePlanet.DAO.User;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
+import MoviePlanet.view.ListOverviewController;
 import MoviePlanet.view.LoginOverviewController;
 import MoviePlanet.view.MovieOverviewController;
 import MoviePlanet.view.SelectedMovieOverviewController;
@@ -27,6 +29,7 @@ public class MainApp extends Application
    private Scene mainScreen;
    private BorderPane rootLayout;
    private MySQLDatabase db;
+   private User user;
 
    @Override
    public void start(Stage primaryStage)
@@ -43,6 +46,7 @@ public class MainApp extends Application
          {
             initRootLayout();
             showLoginOverview();
+            //showMovieOverview();
          }
       }
       catch (DLException e)
@@ -74,14 +78,18 @@ public class MainApp extends Application
    {
       try
       {
+         rootLayout.setMaxSize(1200, 800);
          rootLayout.setMinSize(1200, 800);
+         primaryStage.setMaxWidth(1200);
+         primaryStage.setMaxHeight(800);
          primaryStage.setMinWidth(1200);
          primaryStage.setMinHeight(800);
+
          primaryStage.setX(352.0);
          primaryStage.setY(67.0);
          FXMLLoader loader = new FXMLLoader();
          loader.setLocation(MainApp.class.getResource("view/MovieOverview.fxml"));
-         AnchorPane movieOverview = (AnchorPane) loader.load();
+         AnchorPane movieOverview = loader.load();
 
          rootLayout.setCenter(movieOverview);
 
@@ -104,13 +112,44 @@ public class MainApp extends Application
       {
          FXMLLoader loader = new FXMLLoader();
          loader.setLocation(MainApp.class.getResource("view/LoginOverview.fxml"));
-         AnchorPane loginOverview = (AnchorPane) loader.load();
+         AnchorPane loginOverview = loader.load();
 
          rootLayout.setCenter(loginOverview);
 
          LoginOverviewController controller = loader.getController();
          controller.setDb(db);
          controller.setMainApp(this);
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public void showListOverview()
+   {
+      try
+      {
+         rootLayout.setMinSize(616, 880);
+         rootLayout.setMaxSize(616, 880);
+         primaryStage.setMinWidth(616);
+         primaryStage.setMinHeight(880);
+         primaryStage.setMaxWidth(616);
+         primaryStage.setMaxHeight(880);
+         primaryStage.setX(650);
+         primaryStage.setY(100);
+
+         FXMLLoader loader = new FXMLLoader();
+         loader.setLocation(MainApp.class.getResource("view/ListOverview.fxml"));
+         AnchorPane listOverview = loader.load();
+
+         rootLayout.setCenter(listOverview);
+
+         ListOverviewController controller = loader.getController();
+         controller.setDb(db);
+         controller.setUser(user);
+         controller.setMainApp(this);
+         controller.retrieveListData();
       }
       catch (IOException e)
       {
@@ -126,6 +165,16 @@ public class MainApp extends Application
    public static void main(String[] args)
    {
       launch(args);
+   }
+
+   public User getUser()
+   {
+      return user;
+   }
+
+   public void setUser(User user)
+   {
+      this.user = user;
    }
 
    public void setStage(boolean version, Movie movie, ArrayList<String> genres, ArrayList<String> cast, ArrayList<String> writer,
@@ -148,6 +197,8 @@ public class MainApp extends Application
             primaryStage.setScene(scene);
             SelectedMovieOverviewController controller = loader.getController();
             controller.setMainApp(this);
+            controller.setDb(db);
+            controller.setUser(this.user);
             controller.setDetails(movie, genres, cast, writer, director, producer);
          }
 

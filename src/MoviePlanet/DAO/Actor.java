@@ -12,8 +12,7 @@ public class Actor
 {
 
    private int actorID;
-   private String firstName;
-   private String lastName;
+   private String name;
    private Date dob;
    private String country;
    private MySQLDatabase db;
@@ -24,20 +23,18 @@ public class Actor
       this.db = db;
    }
 
-   public Actor(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Actor(String name, Date dob, String country, MySQLDatabase db)
    {
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
    }
 
-   public Actor(int actorID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Actor(int actorID, String name, Date dob, String country, MySQLDatabase db)
    {
       this.actorID = actorID;
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
@@ -45,7 +42,7 @@ public class Actor
 
    public void fetch()
    {
-      String query = "SELECT actorID, firstName, lastName, dob, country FROM actor WHERE actorID = ?;";
+      String query = "SELECT actorID, name, dob, country FROM actor WHERE actorID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.actorID));
@@ -65,11 +62,10 @@ public class Actor
 
    public void put()
    {
-      String query = "UPDATE actor SET firstName = ?, lastName = ?, dob = ?, country = ? WHERE actorID = ?;";
+      String query = "UPDATE actor SET name = ?,dob = ?, country = ? WHERE actorID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
       values.add(Integer.toString(this.actorID));
@@ -96,12 +92,11 @@ public class Actor
 
    public void post()
    {
-      String query = "INSERT INTO actor (actorID, firstName, lastName, dob, country) VALUES (?, ?, ?, ?, ?);";
+      String query = "INSERT INTO actor (actorID, name, dob, country) VALUES (?, ?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.actorID));
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
 
@@ -155,18 +150,17 @@ public class Actor
    public void setValues(ArrayList<ArrayList<String>> resultRow)
    {
       setActorID(Integer.parseInt(resultRow.get(0).get(0)));
-      setFirstName(resultRow.get(0).get(1));
-      setLastName(resultRow.get(0).get(2));
+      setName(resultRow.get(0).get(1));
       try
       {
-         setDob(new SimpleDateFormat("yyyy/MM/dd").parse(resultRow.get(0).get(3)));
+         setDob(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(0).get(2)));
       }
       catch (ParseException e)
       {
          //TODO handle exception
          e.printStackTrace();
       }
-      setCountry(resultRow.get(0).get(4));
+      setCountry(resultRow.get(0).get(3));
    }
 
    public int getActorID()
@@ -179,24 +173,14 @@ public class Actor
       this.actorID = actorID;
    }
 
-   public String getFirstName()
+   public String getName()
    {
-      return firstName;
+      return name;
    }
 
-   public void setFirstName(String firstName)
+   public void setName(String name)
    {
-      this.firstName = firstName;
-   }
-
-   public String getLastName()
-   {
-      return lastName;
-   }
-
-   public void setLastName(String lastName)
-   {
-      this.lastName = lastName;
+      this.name = name;
    }
 
    public Date getDob()

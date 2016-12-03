@@ -52,19 +52,10 @@
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
                     <MenuItem fx:id="listEdit" mnemonicParsing="false" text="List" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem fx:id="adminEdit" mnemonicParsing="false" text="Admin" />
                   </items>
                 </Menu>
               </menus>

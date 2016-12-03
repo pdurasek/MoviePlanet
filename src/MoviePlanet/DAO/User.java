@@ -38,7 +38,7 @@ public class User
 
    public void fetch()
    {
-      String query = "SELECT userID, username, password FROM user WHERE userID = ?;";
+      String query = "SELECT userID, username, password, accessLevel FROM user WHERE userID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.userID));
@@ -58,11 +58,12 @@ public class User
 
    public void put()
    {
-      String query = "UPDATE user SET username = ?, password = ? WHERE userID = ?;";
+      String query = "UPDATE user SET username = ?, password = ?, accessLevel = ? WHERE userID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(this.username);
       values.add(this.password);
+      values.add(this.accessLevel);
       values.add(Integer.toString(this.userID));
 
       try
@@ -87,12 +88,12 @@ public class User
 
    public void post()
    {
-      String query = "INSERT INTO user (userID, username, password) VALUES (?, ?, ?);";
+      String query = "INSERT INTO user (username, password, accessLevel) VALUES (?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(Integer.toString(this.userID));
       values.add(this.username);
       values.add(this.password);
+      values.add(this.accessLevel);
 
       try
       {
@@ -146,6 +147,7 @@ public class User
       setUserID(Integer.parseInt(resultRow.get(0).get(0)));
       setUsername(resultRow.get(0).get(1));
       setPassword(resultRow.get(0).get(2));
+      setAccessLevel(resultRow.get(0).get(3));
    }
 
    public int getUserID()

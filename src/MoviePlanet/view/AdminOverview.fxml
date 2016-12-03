@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MoviePlanet.view.AdminOverviewController">
+    <children>
+        <BorderPane fx:id="basePane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <GridPane style="-fx-background-color: #181818;" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="748.0" minWidth="10.0" prefWidth="600.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="600.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <ComboBox fx:id="personTypeCombo" layoutX="347.0" layoutY="38.0" prefWidth="150.0" />
+                        <Button fx:id="clearPersonButton" layoutX="55.0" layoutY="38.0" mnemonicParsing="false" text="Clear" />
+                        <Label layoutX="55.0" layoutY="170.0" text="Name:" textFill="#bfbfbf" />
+                        <Label layoutX="55.0" layoutY="215.0" text="Date of Birth:" textFill="#bfbfbf" />
+                        <Label layoutX="57.0" layoutY="260.0" text="Country:" textFill="#bfbfbf" />
+                        <TextField fx:id="personNameField" layoutX="182.0" layoutY="166.0" />
+                        <TextField fx:id="personDOBField" layoutX="182.0" layoutY="211.0" />
+                        <TextField fx:id="personCountryField" layoutX="183.0" layoutY="256.0" />
+                        <ComboBox fx:id="personCombo" layoutX="347.0" layoutY="108.0" prefWidth="150.0" />
+                        <Button fx:id="savePersonButton" layoutX="280.0" layoutY="335.0" mnemonicParsing="false" text="Save" />
+                        <Label layoutX="189.0" layoutY="42.0" text="What do you want to add:" textFill="#bfbfbf" />
+                        <Label layoutX="189.0" layoutY="112.0" text="Existing person:" textFill="#bfbfbf" />
+                        <CheckBox fx:id="isPersonEditCheckbox" layoutX="125.0" layoutY="42.0" mnemonicParsing="false" text="Edit" textFill="#bfbfbf" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="800.0" prefWidth="691.0">
+                     <children>
+                        <Button fx:id="newMovie" layoutX="36.0" layoutY="38.0" mnemonicParsing="false" text="Clear" />
+                        <ComboBox fx:id="movieCombo" layoutX="271.0" layoutY="38.0" prefHeight="25.0" prefWidth="304.0" />
+                        <Button fx:id="saveMovie" layoutX="280.0" layoutY="335.0" mnemonicParsing="false" text="Save" />
+                        <Label layoutX="40.0" layoutY="89.0" text="Name:" textFill="#bfbfbf" />
+                        <Label layoutX="40.0" layoutY="119.0" text="Year:" textFill="#bfbfbf" />
+                        <Label layoutX="40.0" layoutY="149.0" text="Screen time:" textFill="#bfbfbf" />
+                        <Label layoutX="41.0" layoutY="179.0" text="Image URL:" textFill="#bfbfbf" />
+                        <Label layoutX="40.0" layoutY="209.0" text="Trailer:" textFill="#bfbfbf" />
+                        <Label layoutX="40.0" layoutY="239.0" text="Rating:" textFill="#bfbfbf" />
+                        <TextField fx:id="movieNameField" layoutX="173.0" layoutY="81.0" prefHeight="25.0" prefWidth="153.0" />
+                        <TextField fx:id="movieYearField" layoutX="173.0" layoutY="111.0" prefHeight="25.0" prefWidth="153.0" />
+                        <TextField fx:id="movieScreenTimeField" layoutX="173.0" layoutY="141.0" prefHeight="25.0" prefWidth="153.0" />
+                        <TextField fx:id="movieImageURLField" layoutX="173.0" layoutY="171.0" prefHeight="25.0" prefWidth="153.0" />
+                        <TextField fx:id="movieTrailerField" layoutX="173.0" layoutY="201.0" prefHeight="25.0" prefWidth="153.0" />
+                        <ComboBox fx:id="movieRatingCombo" layoutX="174.0" layoutY="231.0" prefHeight="25.0" prefWidth="149.0" />
+                        <Label layoutX="374.0" layoutY="89.0" text="Description:" textFill="#bfbfbf" />
+                        <TextArea fx:id="movieDescriptionArea" layoutX="374.0" layoutY="114.0" prefHeight="181.0" prefWidth="201.0" wrapText="true" />
+                        <Label layoutX="174.0" layoutY="42.0" text="Existing movies:" textFill="#bfbfbf" />
+                        <CheckBox fx:id="isMovieEdit" layoutX="105.0" layoutY="42.0" mnemonicParsing="false" text="Edit" textFill="#bfbfbf" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <TextArea fx:id="selectionTextArea" disable="true" layoutX="36.0" layoutY="131.0" prefHeight="156.0" prefWidth="299.0" stylesheets="@../../css/style.css" wrapText="true" />
+                        <ComboBox fx:id="addSelection" layoutX="361.0" layoutY="217.0" prefWidth="150.0" />
+                        <ComboBox fx:id="removeSelection" layoutX="361.0" layoutY="262.0" prefWidth="150.0" />
+                        <Button fx:id="addItem" layoutX="519.0" layoutY="217.0" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="removeItem" layoutX="519.0" layoutY="262.0" mnemonicParsing="false" text="Remove" />
+                        <Label layoutX="166.0" layoutY="89.0" text="What do you want to add:" textFill="#bfbfbf" />
+                        <ComboBox fx:id="selectionItem" layoutX="351.0" layoutY="85.0" prefWidth="150.0" />
+                        <Button fx:id="saveSelection" layoutX="280.0" layoutY="320.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="clearSelection" layoutX="33.0" layoutY="41.0" mnemonicParsing="false" text="Clear" />
+                        <ComboBox fx:id="movieSelection" layoutX="263.0" layoutY="41.0" prefHeight="25.0" prefWidth="304.0" />
+                        <Label layoutX="166.0" layoutY="45.0" text="Existing movies:" textFill="#bfbfbf" />
+                        <Button fx:id="populateButton" layoutX="361.0" layoutY="175.0" mnemonicParsing="false" text="Populate" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label layoutX="51.0" layoutY="146.0" text="Username:" textFill="#bfbfbf" />
+                        <Label layoutX="51.0" layoutY="191.0" text="Password:" textFill="#bfbfbf" />
+                        <TextField fx:id="passwordTextField" layoutX="179.0" layoutY="187.0" />
+                        <TextField fx:id="usernameTextField" layoutX="178.0" layoutY="142.0" />
+                        <Button fx:id="saveUserButton" layoutX="280.0" layoutY="320.0" mnemonicParsing="false" text="Save" />
+                        <ComboBox fx:id="userCombo" layoutX="393.0" layoutY="38.0" prefWidth="150.0" />
+                        <Button fx:id="clearUserButton" layoutX="55.0" layoutY="38.0" mnemonicParsing="false" text="Clear" />
+                        <Label layoutX="189.0" layoutY="42.0" text="Which user do you want to edit:" textFill="#bfbfbf" />
+                        <Button fx:id="backButton" layoutX="523.0" layoutY="320.0" mnemonicParsing="false" text="Back" />
+                        <CheckBox fx:id="isUserEdit" layoutX="111.0" layoutY="42.0" mnemonicParsing="false" text="Edit" textFill="#bfbfbf" />
+                        <Label layoutX="51.0" layoutY="236.0" text="Access level:" textFill="#bfbfbf" />
+                        <TextField fx:id="accessLevelTextField" layoutX="179.0" layoutY="232.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+         </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

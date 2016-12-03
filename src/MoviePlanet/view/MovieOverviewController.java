@@ -37,6 +37,8 @@ public class MovieOverviewController
    private TextField searchBar;
    @FXML
    private MenuItem listEdit;
+   @FXML
+   private MenuItem adminEdit;
 
    private MainApp mainApp;
    private MySQLDatabase db;
@@ -67,16 +69,11 @@ public class MovieOverviewController
          search();
       });
       searchBar.setDisable(true);
-
-      listEdit.setOnAction(event -> mainApp.showListOverview());
    }
 
    public void setMainApp(MainApp mainApp)
    {
       this.mainApp = mainApp;
-
-
-      //grid
    }
 
    public void setDb(MySQLDatabase db)
@@ -90,14 +87,8 @@ public class MovieOverviewController
       movieScrollPane.setStyle("-fx-background-color: #181818");
       moviePane.setStyle("-fx-background-color: #181818");
       anchorPane.setStyle("-fx-background-color: #181818");
-      //movieScrollPane.setStyle("-fx-box-border: transparent;");
-      //movieScrollPane.setStyle("-fx-focus-color: #181818 ; -fx-faint-focus-color: #181818 ;");
 
       generateMovieGrid(initialMovies);
-      /*WebView webView = new WebView();
-      webView.getEngine().load("https://www.youtube.com/embed/u3jVet3ZWPw");
-      webView.setPrefSize(640, 390);
-      moviePane.getChildren().add(webView);*/
    }
 
    private void getSelectedMovies()
@@ -162,7 +153,7 @@ public class MovieOverviewController
          ArrayList<String> writers = fetchDetails(movieID, "Writer_writerID", "movie_has_writer",
                  "writer", "writerID");
          ArrayList<String> directors = fetchDetails(movieID, "Director_directorID", "director_has_movie",
-                 "director",  "directorID");
+                 "director", "directorID");
          ArrayList<String> producers = fetchDetails(movieID, "Producer_producerID", "movie_has_producer",
                  "producer", "producerID");
 
@@ -422,5 +413,21 @@ public class MovieOverviewController
       }
 
       return values;
+   }
+
+   public void checkAdmin()
+   {
+      listEdit.setOnAction(event -> mainApp.showListOverview());
+
+      if(!mainApp.getUser().getAccessLevel().equalsIgnoreCase("admin"))
+      {
+         adminEdit.setDisable(true);
+         adminEdit.setVisible(false);
+      }
+
+      adminEdit.setOnAction(event ->
+      {
+         mainApp.showAdminOverview();
+      });
    }
 }

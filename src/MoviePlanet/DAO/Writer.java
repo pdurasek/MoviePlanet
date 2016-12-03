@@ -11,8 +11,7 @@ import java.util.Date;
 public class Writer
 {
    private int writerID;
-   private String firstName;
-   private String lastName;
+   private String name;
    private Date dob;
    private String country;
    private MySQLDatabase db = null;
@@ -23,20 +22,18 @@ public class Writer
       this.db = db;
    }
 
-   public Writer(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Writer(String name, Date dob, String country, MySQLDatabase db)
    {
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
    }
 
-   public Writer(int writerID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Writer(int writerID, String name, Date dob, String country, MySQLDatabase db)
    {
       this.writerID = writerID;
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
@@ -44,7 +41,7 @@ public class Writer
 
    public void fetch()
    {
-      String query = "SELECT writerID, firstName, lastName, dob, country FROM writer WHERE writerID = ?;";
+      String query = "SELECT writerID, name, dob, country FROM writer WHERE writerID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.writerID));
@@ -64,11 +61,10 @@ public class Writer
 
    public void put()
    {
-      String query = "UPDATE writer SET firstName = ?, lastName = ?, dob = ?, country = ? WHERE writerID = ?;";
+      String query = "UPDATE writer SET name = ?, dob = ?, country = ? WHERE writerID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
       values.add(Integer.toString(this.writerID));
@@ -95,12 +91,11 @@ public class Writer
 
    public void post()
    {
-      String query = "INSERT INTO writer (writerID, firstName, lastName, dob, country) VALUES (?, ?, ?, ?, ?);";
+      String query = "INSERT INTO writer (writerID, name, dob, country) VALUES (?, ?, ?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.writerID));
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
 
@@ -154,18 +149,17 @@ public class Writer
    public void setValues(ArrayList<ArrayList<String>> resultRow)
    {
       setWriterID(Integer.parseInt(resultRow.get(0).get(0)));
-      setFirstName(resultRow.get(0).get(1));
-      setLastName(resultRow.get(0).get(2));
+      setName(resultRow.get(0).get(1));
       try
       {
-         setDob(new SimpleDateFormat("yyyy/MM/dd").parse(resultRow.get(0).get(3)));
+         setDob(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(0).get(2)));
       }
       catch (ParseException e)
       {
          //TODO handle exception
          e.printStackTrace();
       }
-      setCountry(resultRow.get(0).get(4));
+      setCountry(resultRow.get(0).get(3));
    }
 
    public int getWriterID()
@@ -178,24 +172,14 @@ public class Writer
       this.writerID = writerID;
    }
 
-   public String getFirstName()
+   public String getName()
    {
-      return firstName;
+      return name;
    }
 
-   public void setFirstName(String firstName)
+   public void setName(String name)
    {
-      this.firstName = firstName;
-   }
-
-   public String getLastName()
-   {
-      return lastName;
-   }
-
-   public void setLastName(String lastName)
-   {
-      this.lastName = lastName;
+      this.name = name;
    }
 
    public Date getDob()

@@ -11,8 +11,7 @@ import java.util.Date;
 public class Producer
 {
    private int producerID;
-   private String firstName;
-   private String lastName;
+   private String name;
    private Date dob;
    private String country;
    private MySQLDatabase db;
@@ -23,20 +22,18 @@ public class Producer
       this.db = db;
    }
 
-   public Producer(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Producer(String name, Date dob, String country, MySQLDatabase db)
    {
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
    }
 
-   public Producer(int producerID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Producer(int producerID, String name, Date dob, String country, MySQLDatabase db)
    {
       this.producerID = producerID;
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
@@ -44,7 +41,7 @@ public class Producer
 
    public void fetch()
    {
-      String query = "SELECT producerID, firstName, lastName, dob, country FROM producer WHERE producerID = ?;";
+      String query = "SELECT producerID, name, dob, country FROM producer WHERE producerID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.producerID));
@@ -64,11 +61,10 @@ public class Producer
 
    public void put()
    {
-      String query = "UPDATE producer SET firstName = ?, lastName = ?, dob = ?, country = ? WHERE producerID = ?;";
+      String query = "UPDATE producer SET name = ?, dob = ?, country = ? WHERE producerID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
       values.add(Integer.toString(this.producerID));
@@ -95,12 +91,11 @@ public class Producer
 
    public void post()
    {
-      String query = "INSERT INTO producer (producerID, firstName, lastName, dob, country) VALUES (?, ?, ?, ?, ?);";
+      String query = "INSERT INTO producer (producerID, name, dob, country) VALUES (?, ?, ?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.producerID));
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
 
@@ -154,18 +149,17 @@ public class Producer
    public void setValues(ArrayList<ArrayList<String>> resultRow)
    {
       setProducerID(Integer.parseInt(resultRow.get(0).get(0)));
-      setFirstName(resultRow.get(0).get(1));
-      setLastName(resultRow.get(0).get(2));
+      setName(resultRow.get(0).get(1));
       try
       {
-         setDob(new SimpleDateFormat("yyyy/MM/dd").parse(resultRow.get(0).get(3)));
+         setDob(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(0).get(2)));
       }
       catch (ParseException e)
       {
          //TODO handle exception
          e.printStackTrace();
       }
-      setCountry(resultRow.get(0).get(4));
+      setCountry(resultRow.get(0).get(3));
    }
 
    public int getProducerID()
@@ -178,24 +172,14 @@ public class Producer
       this.producerID = producerID;
    }
 
-   public String getFirstName()
+   public String getName()
    {
-      return firstName;
+      return name;
    }
 
-   public void setFirstName(String firstName)
+   public void setName(String name)
    {
-      this.firstName = firstName;
-   }
-
-   public String getLastName()
-   {
-      return lastName;
-   }
-
-   public void setLastName(String lastName)
-   {
-      this.lastName = lastName;
+      this.name = name;
    }
 
    public Date getDob()

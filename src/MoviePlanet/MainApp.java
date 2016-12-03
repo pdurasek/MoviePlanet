@@ -4,10 +4,7 @@ import MoviePlanet.DAO.Movie;
 import MoviePlanet.DAO.User;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
-import MoviePlanet.view.ListOverviewController;
-import MoviePlanet.view.LoginOverviewController;
-import MoviePlanet.view.MovieOverviewController;
-import MoviePlanet.view.SelectedMovieOverviewController;
+import MoviePlanet.view.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -99,6 +96,7 @@ public class MainApp extends Application
          controller.getFilters();
          controller.getInitialMovies();
          controller.setMainApp(this);
+         controller.checkAdmin();
       }
       catch (IOException e)
       {
@@ -119,6 +117,27 @@ public class MainApp extends Application
          LoginOverviewController controller = loader.getController();
          controller.setDb(db);
          controller.setMainApp(this);
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public void showAdminOverview()
+   {
+      try
+      {
+         FXMLLoader loader = new FXMLLoader();
+         loader.setLocation(MainApp.class.getResource("view/AdminOverview.fxml"));
+         AnchorPane adminOverview = loader.load();
+
+         rootLayout.setCenter(adminOverview);
+
+         AdminOverviewController controller = loader.getController();
+         controller.setDb(db);
+         controller.setMainApp(this);
+         controller.populateData();
       }
       catch (IOException e)
       {

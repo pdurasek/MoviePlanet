@@ -54,7 +54,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Actor` (
   `actorID` INT NOT NULL,
-  `firstName` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `dob` DATE NULL,
   `country` VARCHAR(45) NULL,
@@ -78,7 +78,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Producer` (
   `producerID` INT NOT NULL,
-  `firstName` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `dob` DATE NULL,
   `country` VARCHAR(45) NULL,
@@ -91,7 +91,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Director` (
   `directorID` INT NOT NULL,
-  `firstName` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `dob` DATE NULL,
   `country` VARCHAR(45) NULL,
@@ -124,7 +124,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Writer` (
   `writerID` INT NOT NULL,
-  `firstName` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `dob` DATE NULL,
   `country` VARCHAR(45) NULL,

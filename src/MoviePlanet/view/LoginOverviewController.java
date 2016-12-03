@@ -64,6 +64,7 @@ public class LoginOverviewController
          if (password.getText().equals(passwordStr))
          {
             User user = new User(Integer.parseInt(result.get(0).get(1)), db);
+            user.fetch();
             mainApp.setUser(user);
             mainApp.showMovieOverview();
          }

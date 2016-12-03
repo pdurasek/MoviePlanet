@@ -12,8 +12,7 @@ public class Director
 {
 
    private int directorID;
-   private String firstName;
-   private String lastName;
+   private String name;
    private Date dob;
    private String country;
    private MySQLDatabase db = null;
@@ -24,20 +23,18 @@ public class Director
       this.db = db;
    }
 
-   public Director(String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Director(String name, Date dob, String country, MySQLDatabase db)
    {
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
    }
 
-   public Director(int directorID, String firstName, String lastName, Date dob, String country, MySQLDatabase db)
+   public Director(int directorID, String name, Date dob, String country, MySQLDatabase db)
    {
       this.directorID = directorID;
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.name = name;
       this.dob = dob;
       this.country = country;
       this.db = db;
@@ -45,7 +42,7 @@ public class Director
 
    public void fetch()
    {
-      String query = "SELECT directorID, firstName, lastName, dob, country" +
+      String query = "SELECT directorID, name, dob, country" +
               " from director where directorID = ?;";
       ArrayList<ArrayList<String>> resultRow = null;
       ArrayList<String> values = new ArrayList<>();
@@ -67,12 +64,11 @@ public class Director
    {
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
       values.add(Integer.toString(this.directorID));
-      String query = "UPDATE director set firstName= ?, lastName = ? ,dob= ?, country= ? " +
+      String query = "UPDATE director set name= ?,dob= ?, country= ? " +
               "where equipID=?;";
 
       try
@@ -100,12 +96,11 @@ public class Director
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
       values.add(Integer.toString(this.directorID));
-      values.add(this.firstName);
-      values.add(this.lastName);
+      values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
-      String query = "INSERT INTO director (firstName, lastName, dob, country) " +
-              "VALUES (?, ?, ?, ?)";
+      String query = "INSERT INTO director (name, dob, country) " +
+              "VALUES (?, ?, ?)";
 
       try
       {
@@ -157,18 +152,17 @@ public class Director
    public void setValues(ArrayList<ArrayList<String>> resultRow)
    {
       setDirectorID(Integer.parseInt(resultRow.get(0).get(0)));
-      setFirstName(resultRow.get(1).get(1));
-      setLastName(resultRow.get(2).get(2));
+      setName(resultRow.get(1).get(1));
       try
       {
-         setDob(new SimpleDateFormat("yyyy/MM/dd").parse(resultRow.get(3).get(3)));
+         setDob(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(2).get(2)));
       }
       catch (ParseException e)
       {
          //TODO handle exception
          e.printStackTrace();
       }
-      setCountry(resultRow.get(4).get(4));
+      setCountry(resultRow.get(3).get(3));
    }
 
    public int getDirectorID()
@@ -181,24 +175,14 @@ public class Director
       this.directorID = directorID;
    }
 
-   public String getFirstName()
+   public String getName()
    {
-      return firstName;
+      return name;
    }
 
-   public void setFirstName(String firbstName)
+   public void setName(String firbstName)
    {
-      this.firstName = firstName;
-   }
-
-   public String getLastName()
-   {
-      return lastName;
-   }
-
-   public void setLastName(String lastName)
-   {
-      this.lastName = lastName;
+      this.name = name;
    }
 
    public Date getDob()

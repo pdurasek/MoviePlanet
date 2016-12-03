@@ -80,10 +80,9 @@ public class Genre
 
    public void post()
    {
-      String query = "INSERT INTO genre (genreID, name) VALUES (?, ?);";
+      String query = "INSERT INTO genre (name) VALUES (?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(Integer.toString(this.genreID));
       values.add(this.name);
 
       try

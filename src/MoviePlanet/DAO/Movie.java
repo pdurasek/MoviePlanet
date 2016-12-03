@@ -73,17 +73,18 @@ public class Movie
 
    public void put()
    {
-      String query = "UPDATE movie SET name = ?, description = ?, score = ?, year = ?, screenTime = ?, image = ?, trailer = ? WHERE movieID = ?;";
+      String query = "UPDATE movie SET ratingID = ?, name = ?, description = ?, score = ?, year = ?, screenTime = ?, image = ?, trailer = ? WHERE movieID = ?;";
       boolean dataFound = false;
       ArrayList<String> values = new ArrayList<>();
+      values.add(Integer.toString(this.ratingID));
       values.add(this.name);
       values.add(this.description);
       values.add(Double.toString(this.score));
-      values.add(Integer.toString(this.movieID));
       values.add(Integer.toString(this.year));
       values.add(Integer.toString(this.screenTime));
       values.add(this.image);
       values.add(this.trailer);
+      values.add(Integer.toString(this.movieID));
 
       try
       {
@@ -107,10 +108,10 @@ public class Movie
 
    public void post()
    {
-      String query = "INSERT INTO movie (movieID, name, description, score, year, screenTime, image, trailer) VALUES (?, ?, ?, ?);";
+      String query = "INSERT INTO movie (ratingID, name, description, score, year, screenTime, image, trailer) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(Integer.toString(this.movieID));
+      values.add(Integer.toString(this.ratingID));
       values.add(this.name);
       values.add(this.description);
       values.add(Double.toString(this.score));

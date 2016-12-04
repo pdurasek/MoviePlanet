@@ -60,7 +60,7 @@
                         <TextField fx:id="movieScreenTimeField" layoutX="173.0" layoutY="141.0" prefHeight="25.0" prefWidth="153.0" />
                         <TextField fx:id="movieImageURLField" layoutX="173.0" layoutY="171.0" prefHeight="25.0" prefWidth="153.0" />
                         <TextField fx:id="movieTrailerField" layoutX="173.0" layoutY="201.0" prefHeight="25.0" prefWidth="153.0" />
-                        <ComboBox fx:id="movieRatingCombo" layoutX="174.0" layoutY="231.0" prefHeight="25.0" prefWidth="149.0" />
+                        <ComboBox fx:id="movieRatingCombo" layoutX="174.0" layoutY="231.0" prefHeight="25.0" prefWidth="152.0" />
                         <Label layoutX="374.0" layoutY="89.0" text="Description:" textFill="#bfbfbf" />
                         <TextArea fx:id="movieDescriptionArea" layoutX="374.0" layoutY="114.0" prefHeight="181.0" prefWidth="201.0" wrapText="true" />
                         <Label layoutX="174.0" layoutY="42.0" text="Existing movies:" textFill="#bfbfbf" />
@@ -74,12 +74,11 @@
                         <ComboBox fx:id="removeSelection" layoutX="361.0" layoutY="262.0" prefWidth="150.0" />
                         <Button fx:id="addItem" layoutX="519.0" layoutY="217.0" mnemonicParsing="false" text="Add" />
                         <Button fx:id="removeItem" layoutX="519.0" layoutY="262.0" mnemonicParsing="false" text="Remove" />
-                        <Label layoutX="166.0" layoutY="89.0" text="What do you want to add:" textFill="#bfbfbf" />
-                        <ComboBox fx:id="selectionItem" layoutX="351.0" layoutY="85.0" prefWidth="150.0" />
+                        <Label layoutX="36.0" layoutY="89.0" text="What do you want to add:" textFill="#bfbfbf" />
+                        <ComboBox fx:id="selectionItem" layoutX="221.0" layoutY="85.0" prefWidth="150.0" />
                         <Button fx:id="saveSelection" layoutX="280.0" layoutY="320.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="clearSelection" layoutX="33.0" layoutY="41.0" mnemonicParsing="false" text="Clear" />
-                        <ComboBox fx:id="movieSelection" layoutX="263.0" layoutY="41.0" prefHeight="25.0" prefWidth="304.0" />
-                        <Label layoutX="166.0" layoutY="45.0" text="Existing movies:" textFill="#bfbfbf" />
+                        <ComboBox fx:id="movieSelection" layoutX="133.0" layoutY="41.0" prefHeight="25.0" prefWidth="304.0" />
+                        <Label layoutX="36.0" layoutY="45.0" text="Existing movies:" textFill="#bfbfbf" />
                         <Button fx:id="populateButton" layoutX="361.0" layoutY="175.0" mnemonicParsing="false" text="Populate" />
                      </children>
                   </Pane>

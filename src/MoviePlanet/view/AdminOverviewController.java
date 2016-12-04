@@ -7,6 +7,7 @@ import MoviePlanet.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -185,7 +186,7 @@ public class AdminOverviewController
                   if (selectedPerson.equalsIgnoreCase("Director"))
                   {
                      Director director = new Director(Integer.parseInt(row.get(0)), row.get(1),
-                             new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                             new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
 
                      directorList.put(director.getName(), director);
                      personCombo.getItems().add(director.getName());
@@ -193,7 +194,7 @@ public class AdminOverviewController
                   else if (selectedPerson.equalsIgnoreCase("Actor"))
                   {
                      Actor actor = new Actor(Integer.parseInt(row.get(0)), row.get(1),
-                             new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                             new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
 
                      actorList.put(actor.getName(), actor);
                      personCombo.getItems().add(actor.getName());
@@ -201,7 +202,7 @@ public class AdminOverviewController
                   else if (selectedPerson.equalsIgnoreCase("Producer"))
                   {
                      Producer producer = new Producer(Integer.parseInt(row.get(0)), row.get(1),
-                             new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                             new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
 
                      producerList.put(producer.getName(), producer);
                      personCombo.getItems().add(producer.getName());
@@ -209,7 +210,7 @@ public class AdminOverviewController
                   else
                   {
                      Writer writer = new Writer(Integer.parseInt(row.get(0)), row.get(1),
-                             new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                             new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
 
                      writerList.put(writer.getName(), writer);
                      personCombo.getItems().add(writer.getName());
@@ -330,7 +331,7 @@ public class AdminOverviewController
          {
             if (personComboValue.equals("Director"))
             {
-               Director director = new Director(name, new SimpleDateFormat("yyyy-MM-dd").parse(dob), country, db);
+               Director director = new Director(directorList.get(personCombo.getValue()).getDirectorID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
                   director.put();
@@ -342,7 +343,7 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Producer"))
             {
-               Producer producer = new Producer(name, new SimpleDateFormat("yyyy-MM-dd").parse(dob), country, db);
+               Producer producer = new Producer(producerList.get(personCombo.getValue()).getProducerID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
                   producer.put();
@@ -354,7 +355,7 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Writer"))
             {
-               Writer writer = new Writer(name, new SimpleDateFormat("yyyy-MM-dd").parse(dob), country, db);
+               Writer writer = new Writer(writerList.get(personCombo.getValue()).getWriterID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
                   writer.put();
@@ -366,7 +367,7 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Actor"))
             {
-               Actor actor = new Actor(name, new SimpleDateFormat("yyyy-MM-dd").parse(dob), country, db);
+               Actor actor = new Actor(actorList.get(personCombo.getValue()).getActorID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
                   actor.put();
@@ -393,6 +394,77 @@ public class AdminOverviewController
             accessLevelTextField.setText(user.getAccessLevel());
          }
 
+      });
+
+      saveSelection.setOnMouseClicked(event ->
+      {
+         String selectionGroup = selectionTextArea.getText();
+         String selectedPerson = selectionItem.getValue();
+         String sql = "";
+         String targetTable = "";
+         boolean firstQuery = true;
+         ArrayList<String> values = new ArrayList<>();
+         int selectionID = selectedMovieList.get(movieSelection.getValue()).getMovieID();
+         String[] valueList = selectionGroup.split(", ");
+         for(int i = 0; i < valueList.length; i++)
+         {
+            int id = -1;
+
+            if(selectedPerson.equalsIgnoreCase("actor"))
+            {
+               id = activeActorToMovieList.get(valueList[i]).getActorID();
+               sql = "INSERT INTO actor_has_movie (Actor_actorID, Movie_movieID) VALUES (?, ?);";
+               targetTable = "actor_has_movie";
+            }
+            else if (selectedPerson.equalsIgnoreCase("producer"))
+            {
+               id = activeProducerToMovieList.get(valueList[i]).getProducerID();
+               sql = "INSERT INTO movie_has_producer (Producer_producerID, Movie_movieID) VALUES (?, ?);";
+               targetTable = "movie_has_producer";
+            }
+            else if (selectedPerson.equalsIgnoreCase("writer"))
+            {
+               id = activeWriterToMovieList.get(valueList[i]).getWriterID();
+               sql = "INSERT INTO movie_has_writer (Writer_writerID, Movie_movieID) VALUES (?, ?);";
+               targetTable = "movie_has_writer";
+            }
+            else if (selectedPerson.equalsIgnoreCase("director"))
+            {
+               id = activeDirectorToMovieList.get(valueList[i]).getDirectorID();
+               sql = "INSERT INTO director_has_movie (Director_directorID, Movie_movieID) VALUES (?, ?);";
+               targetTable = "director_has_movie";
+            }
+            else
+            {
+               id = activeGenres.get(valueList[i]).getGenreID();
+               sql = "INSERT INTO movie_has_genre (Genre_genreID, Movie_movieID) VALUES (?, ?);";
+               targetTable = "movie_has_genre";
+            }
+
+            values.add(Integer.toString(id));
+            values.add(Integer.toString(selectionID));
+
+            try
+            {
+               if (firstQuery)
+               {
+                  String deleteSql = "DELETE FROM " +targetTable +" WHERE Movie_movieID = ?";
+                  ArrayList<String> deleteValues = new ArrayList<>();
+                  deleteValues.add(Integer.toString(selectionID));
+
+                  db.setData(deleteSql, deleteValues);
+                  firstQuery = false;
+               }
+
+               db.setData(sql, values);
+               values.clear();
+            }
+            catch (DLException e)
+            {
+               e.printStackTrace();
+               values.clear();
+            }
+         }
       });
 
       saveUserButton.setOnMouseClicked(event ->
@@ -438,7 +510,7 @@ public class AdminOverviewController
    private void generateMovieCombo(LinkedHashMap map, ComboBox<String> targetCombo) throws DLException
    {
       String sql = "SELECT movieID, ratingID, name, description, score, year, screenTime, image, trailer from movie";
-
+      targetCombo.getItems().clear();
       ArrayList<ArrayList<String>> result = db.getData(sql, new ArrayList<>());
 
       for (int i = 0; i < result.size(); i++)
@@ -466,6 +538,10 @@ public class AdminOverviewController
             addSelection.getItems().clear();
             removeSelection.getItems().clear();
             activeGenres.clear();
+            activeWriterToMovieList.clear();
+            activeProducerToMovieList.clear();
+            activeActorToMovieList.clear();
+            activeDirectorToMovieList.clear();
             try
             {
                String selectedItem = selectionItem.getValue();
@@ -519,7 +595,7 @@ public class AdminOverviewController
                         ArrayList<String> row = result.get(i);
 
                         Actor actor = new Actor(Integer.parseInt(row.get(0)), row.get(1),
-                                new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                                new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
                         actorToMovieList.put(actor.getName(), actor);
                         addSelection.getItems().add(actor.getName());
                      }
@@ -554,7 +630,7 @@ public class AdminOverviewController
                         ArrayList<String> row = result.get(i);
 
                         Director director = new Director(Integer.parseInt(row.get(0)), row.get(1),
-                                new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                                new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
                         directorToMovieList.put(director.getName(), director);
                         addSelection.getItems().add(director.getName());
                      }
@@ -589,7 +665,7 @@ public class AdminOverviewController
                         ArrayList<String> row = result.get(i);
 
                         Producer producer = new Producer(Integer.parseInt(row.get(0)), row.get(1),
-                                new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                                new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
                         producerToMovieList.put(producer.getName(), producer);
                         addSelection.getItems().add(producer.getName());
                      }
@@ -624,7 +700,7 @@ public class AdminOverviewController
                         ArrayList<String> row = result.get(i);
 
                         Writer writer = new Writer(Integer.parseInt(row.get(0)), row.get(1),
-                                new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)), row.get(3), db);
+                                new Date(new SimpleDateFormat("yyyy-MM-dd").parse(row.get(2)).getTime()), row.get(3), db);
                         writerToMovieList.put(writer.getName(), writer);
                         addSelection.getItems().add(writer.getName());
                      }
@@ -659,27 +735,6 @@ public class AdminOverviewController
             {
                e.printStackTrace();
             }
-
-            /*if (selectedItem.equalsIgnoreCase("actor"))
-            {
-
-            }
-            else if (selectedItem.equalsIgnoreCase("genre"))
-            {
-
-            }
-            else if (selectedItem.equalsIgnoreCase("producer"))
-            {
-
-            }
-            else if (selectedItem.equalsIgnoreCase("writer"))
-            {
-
-            }
-            else
-            {
-
-            }*/
          });
 
          addItem.setOnMouseClicked(event ->
@@ -691,21 +746,22 @@ public class AdminOverviewController
 
          removeItem.setOnMouseClicked(event ->
          {
+            String selectionItemStr = selectionItem.getValue();
             String selectedItem = removeSelection.getValue();
 
-            if (selectedItem.equalsIgnoreCase("actor"))
+            if (selectionItemStr.equalsIgnoreCase("actor"))
             {
                removeActiveItem(activeActorToMovieList, selectedItem);
             }
-            else if (selectedItem.equalsIgnoreCase("genre"))
+            else if (selectionItemStr.equalsIgnoreCase("genre"))
             {
                removeActiveItem(activeGenres, selectedItem);
             }
-            else if (selectedItem.equalsIgnoreCase("producer"))
+            else if (selectionItemStr.equalsIgnoreCase("producer"))
             {
                removeActiveItem(activeProducerToMovieList, selectedItem);
             }
-            else if (selectedItem.equalsIgnoreCase("writer"))
+            else if (selectionItemStr.equalsIgnoreCase("writer"))
             {
                removeActiveItem(activeWriterToMovieList, selectedItem);
             }
@@ -723,30 +779,31 @@ public class AdminOverviewController
 
    private void generateActiveSelectionCombo(String type)
    {
+      String selectionItemStr = selectionItem.getValue();
       removeSelection.getItems().clear();
 
-      if (type.equalsIgnoreCase("actor"))
+      if (selectionItemStr.equalsIgnoreCase("actor"))
       {
          for (Map.Entry<String, Actor> entry : activeActorToMovieList.entrySet())
          {
             removeSelection.getItems().add(entry.getKey());
          }
       }
-      else if (type.equalsIgnoreCase("genre"))
+      else if (selectionItemStr.equalsIgnoreCase("genre"))
       {
          for (Map.Entry<String, Genre> entry : activeGenres.entrySet())
          {
             removeSelection.getItems().add(entry.getKey());
          }
       }
-      else if (type.equalsIgnoreCase("producer"))
+      else if (selectionItemStr.equalsIgnoreCase("producer"))
       {
          for (Map.Entry<String, Producer> entry : activeProducerToMovieList.entrySet())
          {
             removeSelection.getItems().add(entry.getKey());
          }
       }
-      else if (type.equalsIgnoreCase("writer"))
+      else if (selectionItemStr.equalsIgnoreCase("writer"))
       {
          for (Map.Entry<String, Writer> entry : activeWriterToMovieList.entrySet())
          {
@@ -818,8 +875,10 @@ public class AdminOverviewController
    private void removeActiveItem(LinkedHashMap map, String selectedItem)
    {
       map.remove(selectedItem);
-      generateActivePreview(selectedItem);
-      generateActiveSelectionCombo(selectedItem);
+      generateActivePreview(selectionItem.getValue());
+      generateActiveSelectionCombo(selectionItem.getValue());
+      //generateActivePreview(selectedItem);
+      //generateActiveSelectionCombo(selectedItem);
    }
 
    private void alertExisting(String word)
@@ -836,8 +895,8 @@ public class AdminOverviewController
 
    private void addActiveItem(String selectedItem)
    {
-
-      if (selectedItem.equalsIgnoreCase("actor"))
+      String selectionItemValue = selectionItem.getValue();
+      if (selectionItemValue.equalsIgnoreCase("actor"))
       {
          if (activeActorToMovieList.containsKey(selectedItem))
          {
@@ -846,11 +905,11 @@ public class AdminOverviewController
          else
          {
             selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
-            activeActorToMovieList.put(selectedItem, activeActorToMovieList.get(selectedItem));
+            activeActorToMovieList.put(selectedItem, actorToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
       }
-      else if (selectedItem.equalsIgnoreCase("genre"))
+      else if (selectionItemValue.equalsIgnoreCase("genre"))
       {
          if (activeGenres.containsKey(selectedItem))
          {
@@ -863,7 +922,7 @@ public class AdminOverviewController
             generateActiveSelectionCombo(selectedItem);
          }
       }
-      else if (selectedItem.equalsIgnoreCase("producer"))
+      else if (selectionItemValue.equalsIgnoreCase("producer"))
       {
          if (activeProducerToMovieList.containsKey(selectedItem))
          {
@@ -872,11 +931,11 @@ public class AdminOverviewController
          else
          {
             selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
-            activeProducerToMovieList.put(selectedItem, activeProducerToMovieList.get(selectedItem));
+            activeProducerToMovieList.put(selectedItem, producerToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
       }
-      else if (selectedItem.equalsIgnoreCase("writer"))
+      else if (selectionItemValue.equalsIgnoreCase("writer"))
       {
          if (activeWriterToMovieList.containsKey(selectedItem))
          {
@@ -885,7 +944,7 @@ public class AdminOverviewController
          else
          {
             selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
-            activeWriterToMovieList.put(selectedItem, activeWriterToMovieList.get(selectedItem));
+            activeWriterToMovieList.put(selectedItem, writerToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
       }
@@ -898,7 +957,7 @@ public class AdminOverviewController
          else
          {
             selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
-            activeDirectorToMovieList.put(selectedItem, activeDirectorToMovieList.get(selectedItem));
+            activeDirectorToMovieList.put(selectedItem, directorToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
       }

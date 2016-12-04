@@ -3,10 +3,10 @@ package MoviePlanet.DAO;
 import MoviePlanet.DBAbstractionLayer.DLException;
 import MoviePlanet.DBAbstractionLayer.MySQLDatabase;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Actor
 {
@@ -92,10 +92,9 @@ public class Actor
 
    public void post()
    {
-      String query = "INSERT INTO actor (actorID, name, dob, country) VALUES (?, ?, ?, ?);";
+      String query = "INSERT INTO actor (name, dob, country) VALUES (?, ?, ?);";
       boolean success = false;
       ArrayList<String> values = new ArrayList<>();
-      values.add(Integer.toString(this.actorID));
       values.add(this.name);
       values.add(this.dob.toString());
       values.add(this.country);
@@ -153,7 +152,7 @@ public class Actor
       setName(resultRow.get(0).get(1));
       try
       {
-         setDob(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(0).get(2)));
+         setDob(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(resultRow.get(0).get(2)).getTime()));
       }
       catch (ParseException e)
       {

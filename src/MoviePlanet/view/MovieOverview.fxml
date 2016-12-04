@@ -45,7 +45,7 @@
                   </GridPane>
                </content>
                <BorderPane.margin>
-                  <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+                  <Insets bottom="50.0" left="30.0" right="30.0" top="20.0" />
                </BorderPane.margin>
             </ScrollPane>
          </center>

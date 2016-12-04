@@ -176,7 +176,7 @@ public class MovieOverviewController
       moviePoster.getChildren().add(titleLabel);
       moviePane.add(moviePoster, j, i);
       moviePane.setAlignment(Pos.TOP_CENTER);
-      moviePane.setVgap(55);
+      moviePane.setVgap(50);
       moviePane.setHgap(15);
    }
 

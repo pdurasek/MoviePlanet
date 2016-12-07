@@ -331,9 +331,10 @@ public class AdminOverviewController
          {
             if (personComboValue.equals("Director"))
             {
-               Director director = new Director(directorList.get(personCombo.getValue()).getDirectorID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
+               Director director = new Director(name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
+                  director.setDirectorID(directorList.get(personCombo.getValue()).getDirectorID());
                   director.put();
                }
                else
@@ -343,9 +344,10 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Producer"))
             {
-               Producer producer = new Producer(producerList.get(personCombo.getValue()).getProducerID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
+               Producer producer = new Producer(name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
+                  producer.setProducerID(producerList.get(personCombo.getValue()).getProducerID());
                   producer.put();
                }
                else
@@ -355,9 +357,10 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Writer"))
             {
-               Writer writer = new Writer(writerList.get(personCombo.getValue()).getWriterID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
+               Writer writer = new Writer(name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
+                  writer.setWriterID(writerList.get(personCombo.getValue()).getWriterID());
                   writer.put();
                }
                else
@@ -367,9 +370,10 @@ public class AdminOverviewController
             }
             else if (personComboValue.equals("Actor"))
             {
-               Actor actor = new Actor(actorList.get(personCombo.getValue()).getActorID(), name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
+               Actor actor = new Actor(name, new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime()), country, db);
                if (isPersonEditCheckbox.isSelected())
                {
+                  actor.setActorID(actorList.get(personCombo.getValue()).getActorID());
                   actor.put();
                }
                else
@@ -406,11 +410,11 @@ public class AdminOverviewController
          ArrayList<String> values = new ArrayList<>();
          int selectionID = selectedMovieList.get(movieSelection.getValue()).getMovieID();
          String[] valueList = selectionGroup.split(", ");
-         for(int i = 0; i < valueList.length; i++)
+         for (int i = 0; i < valueList.length; i++)
          {
             int id = -1;
 
-            if(selectedPerson.equalsIgnoreCase("actor"))
+            if (selectedPerson.equalsIgnoreCase("actor"))
             {
                id = activeActorToMovieList.get(valueList[i]).getActorID();
                sql = "INSERT INTO actor_has_movie (Actor_actorID, Movie_movieID) VALUES (?, ?);";
@@ -448,7 +452,7 @@ public class AdminOverviewController
             {
                if (firstQuery)
                {
-                  String deleteSql = "DELETE FROM " +targetTable +" WHERE Movie_movieID = ?";
+                  String deleteSql = "DELETE FROM " + targetTable + " WHERE Movie_movieID = ?";
                   ArrayList<String> deleteValues = new ArrayList<>();
                   deleteValues.add(Integer.toString(selectionID));
 
@@ -574,12 +578,23 @@ public class AdminOverviewController
 
                         if (Integer.parseInt(row.get(0)) == genre.getGenreID())
                         {
-                           stringBuilder.append(genre.getName() + ", ");
+                           if (stringBuilder.length() > 0)
+                           {
+                              stringBuilder.append(", " + genre.getName());
+                           }
+                           else
+                           {
+                              stringBuilder.append(genre.getName());
+                           }
                            activeGenres.put(genre.getName(), genre);
                         }
                      }
                   }
-                  stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                  if (stringBuilder.length() > 0)
+                  {
+                     //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                  }
+
                   selectionTextArea.setText(stringBuilder.toString());
                   generateActiveSelectionCombo(selectedItem);
                }
@@ -614,12 +629,22 @@ public class AdminOverviewController
 
                            if (Integer.parseInt(row.get(0)) == actor.getActorID())
                            {
-                              stringBuilder.append(actor.getName() + ", ");
+                              if (stringBuilder.length() > 0)
+                              {
+                                 stringBuilder.append(", " + actor.getName());
+                              }
+                              else
+                              {
+                                 stringBuilder.append(actor.getName());
+                              }
                               activeActorToMovieList.put(actor.getName(), actor);
                            }
                         }
                      }
-                     stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     if (stringBuilder.length() > 0)
+                     {
+                        //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     }
                      selectionTextArea.setText(stringBuilder.toString());
                      generateActiveSelectionCombo(selectedItem);
                   }
@@ -649,12 +674,23 @@ public class AdminOverviewController
 
                            if (Integer.parseInt(row.get(0)) == director.getDirectorID())
                            {
-                              stringBuilder.append(director.getName() + ", ");
+                              if (stringBuilder.length() > 0)
+                              {
+                                 stringBuilder.append(", " + director.getName());
+                              }
+                              else
+                              {
+                                 stringBuilder.append(director.getName());
+                              }
                               activeDirectorToMovieList.put(director.getName(), director);
                            }
                         }
                      }
-                     stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     if (stringBuilder.length() > 0)
+                     {
+                        //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     }
+
                      selectionTextArea.setText(stringBuilder.toString());
                      generateActiveSelectionCombo(selectedItem);
                   }
@@ -684,12 +720,23 @@ public class AdminOverviewController
 
                            if (Integer.parseInt(row.get(0)) == producer.getProducerID())
                            {
-                              stringBuilder.append(producer.getName() + ", ");
+                              if (stringBuilder.length() > 0)
+                              {
+                                 stringBuilder.append(", " + producer.getName());
+                              }
+                              else
+                              {
+                                 stringBuilder.append(producer.getName());
+                              }
                               activeProducerToMovieList.put(producer.getName(), producer);
                            }
                         }
                      }
-                     stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     if (stringBuilder.length() > 0)
+                     {
+                        //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     }
+
                      selectionTextArea.setText(stringBuilder.toString());
                      generateActiveSelectionCombo(selectedItem);
                   }
@@ -719,12 +766,23 @@ public class AdminOverviewController
 
                            if (Integer.parseInt(row.get(0)) == writer.getWriterID())
                            {
-                              stringBuilder.append(writer.getName() + ", ");
+                              if (stringBuilder.length() > 0)
+                              {
+                                 stringBuilder.append(", " + writer.getName());
+                              }
+                              else
+                              {
+                                 stringBuilder.append(writer.getName());
+                              }
                               activeWriterToMovieList.put(writer.getName(), writer);
                            }
                         }
                      }
-                     stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     if (stringBuilder.length() > 0)
+                     {
+                        //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                     }
+
                      selectionTextArea.setText(stringBuilder.toString());
                      generateActiveSelectionCombo(selectedItem);
                   }
@@ -828,7 +886,14 @@ public class AdminOverviewController
          for (Map.Entry<String, Actor> entry : activeActorToMovieList.entrySet())
          {
             Actor actor = entry.getValue();
-            stringBuilder.append(actor.getName() + ", ");
+            if (stringBuilder.length() > 0)
+            {
+               stringBuilder.append(", " + actor.getName());
+            }
+            else
+            {
+               stringBuilder.append(actor.getName());
+            }
          }
       }
       else if (type.equalsIgnoreCase("genre"))
@@ -836,7 +901,14 @@ public class AdminOverviewController
          for (Map.Entry<String, Genre> entry : activeGenres.entrySet())
          {
             Genre genre = entry.getValue();
-            stringBuilder.append(genre.getName() + ", ");
+            if (stringBuilder.length() > 0)
+            {
+               stringBuilder.append(", " + genre.getName());
+            }
+            else
+            {
+               stringBuilder.append(genre.getName());
+            }
          }
       }
       else if (type.equalsIgnoreCase("producer"))
@@ -844,7 +916,14 @@ public class AdminOverviewController
          for (Map.Entry<String, Producer> entry : activeProducerToMovieList.entrySet())
          {
             Producer producer = entry.getValue();
-            stringBuilder.append(producer.getName() + ", ");
+            if (stringBuilder.length() > 0)
+            {
+               stringBuilder.append(", " + producer.getName());
+            }
+            else
+            {
+               stringBuilder.append(producer.getName());
+            }
          }
       }
       else if (type.equalsIgnoreCase("writer"))
@@ -852,7 +931,14 @@ public class AdminOverviewController
          for (Map.Entry<String, Writer> entry : activeWriterToMovieList.entrySet())
          {
             Writer writer = entry.getValue();
-            stringBuilder.append(writer.getName() + ", ");
+            if (stringBuilder.length() > 0)
+            {
+               stringBuilder.append(", " + writer.getName());
+            }
+            else
+            {
+               stringBuilder.append(writer.getName());
+            }
          }
       }
       else
@@ -860,14 +946,21 @@ public class AdminOverviewController
          for (Map.Entry<String, Director> entry : activeDirectorToMovieList.entrySet())
          {
             Director director = entry.getValue();
-            stringBuilder.append(director.getName() + ", ");
+            if (stringBuilder.length() > 0)
+            {
+               stringBuilder.append(", " + director.getName());
+            }
+            else
+            {
+               stringBuilder.append(director.getName());
+            }
          }
       }
 
       int index = stringBuilder.indexOf(", ");
       if (index > 0)
       {
-         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+         //stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
       }
       selectionTextArea.setText(stringBuilder.toString());
    }
@@ -904,7 +997,7 @@ public class AdminOverviewController
          }
          else
          {
-            selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+            checkIfEmpty(selectedItem);
             activeActorToMovieList.put(selectedItem, actorToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
@@ -917,7 +1010,7 @@ public class AdminOverviewController
          }
          else
          {
-            selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+            checkIfEmpty(selectedItem);
             activeGenres.put(selectedItem, genreList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
@@ -930,7 +1023,7 @@ public class AdminOverviewController
          }
          else
          {
-            selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+            checkIfEmpty(selectedItem);
             activeProducerToMovieList.put(selectedItem, producerToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
@@ -943,7 +1036,7 @@ public class AdminOverviewController
          }
          else
          {
-            selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+            checkIfEmpty(selectedItem);
             activeWriterToMovieList.put(selectedItem, writerToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
@@ -956,10 +1049,22 @@ public class AdminOverviewController
          }
          else
          {
-            selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+            checkIfEmpty(selectedItem);
             activeDirectorToMovieList.put(selectedItem, directorToMovieList.get(selectedItem));
             generateActiveSelectionCombo(selectedItem);
          }
+      }
+   }
+
+   private void checkIfEmpty(String selectedItem)
+   {
+      if (selectionTextArea.getText().length() > 0)
+      {
+         selectionTextArea.setText(selectionTextArea.getText() + ", " + selectedItem);
+      }
+      else
+      {
+         selectionTextArea.setText(selectedItem);
       }
    }
 }
